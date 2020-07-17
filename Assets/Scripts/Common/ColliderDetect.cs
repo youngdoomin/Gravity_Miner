@@ -5,7 +5,6 @@ public class ColliderDetect : MonoBehaviour
     private AudioSource BAudio;
     public AudioClip BreakSound;
     private AudioSource JamAudio;
-    public AudioClip JamSound;
     //public static bool platformDetect = true;  // 바닥과 닿을시 감지하는 변수
     //public static bool waited = false;  // 딜레이 주는 변수
     //public static bool fallWaited = false;
@@ -14,7 +13,6 @@ public class ColliderDetect : MonoBehaviour
     private void Awake()
     {
         JamAudio = this.gameObject.AddComponent<AudioSource>();
-        JamAudio.clip = JamSound;
         JamAudio.loop = false;
         BAudio = this.gameObject.AddComponent<AudioSource>();
         BAudio.clip = BreakSound;
@@ -45,10 +43,6 @@ public class ColliderDetect : MonoBehaviour
             StartCoroutine(FallWait());
             */
 
-        }
-        else if(collision.gameObject.tag == "jam")
-        {
-            JamAudio.Play();
         }
 
     }

@@ -36,6 +36,7 @@ public class Playercontroller : MonoBehaviour
     public AudioClip DamSound;
     private AudioSource EAudio;
     public AudioClip mallDie;
+    public AudioClip itemSound;
 
     public static bool killLoop = false;
     public static bool comboActive = false;
@@ -142,6 +143,12 @@ public class Playercontroller : MonoBehaviour
                 Forced(collision.transform.position, xKnockB);
             }
 
+        }
+
+        else if (collision.gameObject.tag == "jam" || collision.gameObject.tag == "item")
+        {
+            PAudio.clip = itemSound;
+            PAudio.Play();
         }
     }
 
