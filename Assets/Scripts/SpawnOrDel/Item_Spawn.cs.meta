@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 97fd7d10f72f5ec45bd909b0295d05db
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - jamPrefab: {instanceID: 0}
+  - parentSp: {fileID: 5975930715509252125, guid: 7464ef6aa12dfaa4b8f03770928acc8d,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
