@@ -51,6 +51,7 @@ public class SlowmotionManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Start_Screen", LoadSceneMode.Single);
+        BGMManager.instance.PlayRandomIntro();
     }
 
     public void again()

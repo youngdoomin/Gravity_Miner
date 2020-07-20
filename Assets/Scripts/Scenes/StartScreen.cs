@@ -109,6 +109,7 @@ public class StartScreen : MonoBehaviour
                     }
                 */
                     step++;
+                    BGMManager.instance.PlayIngameLoop();
                     SceneManager.LoadScene("Flower_Rain", LoadSceneMode.Single);
                 }
                 break;
