@@ -17,7 +17,8 @@ public class DestroyByBoundary_Script : MonoBehaviour
         if (other.gameObject.tag == "TileMap")
         {
             TilemapSpawner.tileCt--;
-            Destroy(other.gameObject); // 다른 오브젝트 파괴
+            //Destroy(other.gameObject); // 다른 오브젝트 파괴
+            GameManager.Instance.Destroyed();
         }  
 	}
 

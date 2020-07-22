@@ -53,7 +53,6 @@ public class Playercontroller : MonoBehaviour
         //cjumpP = jumpP;
         rb = GetComponent<Rigidbody2D>();
         PAudio = gameObject.AddComponent<AudioSource>();
-        PAudio.clip = DamSound;
         PAudio.loop = false;
         EAudio = gameObject.AddComponent<AudioSource>();
         EAudio.clip = mallDie;
@@ -163,6 +162,7 @@ public class Playercontroller : MonoBehaviour
         HPManager.TakeDamage(life);
         sR.sprite = Damaged;
         GroundDam = false;
+        PAudio.clip = DamSound;
         PAudio.Play();
         if (life == 0)
         {
