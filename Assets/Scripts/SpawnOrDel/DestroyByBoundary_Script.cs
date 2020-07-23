@@ -18,7 +18,7 @@ public class DestroyByBoundary_Script : MonoBehaviour
         {
             TilemapSpawner.tileCt--;
             //Destroy(other.gameObject); // 다른 오브젝트 파괴
-            GameManager.Instance.Destroyed();
+            GameManager.Instance.TileDestroyed();
         }  
 	}
 

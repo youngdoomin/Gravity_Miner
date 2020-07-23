@@ -26,9 +26,10 @@ public class DestructTile : MonoBehaviour
 
         }
         this.gameObject.BroadcastMessage("ParticlePlay");
-        this.gameObject.SetActive(false);
+        tileSp.color = new Color(1,1,1,0);
+        GetComponent<BoxCollider2D>().enabled = false;
+        
         //tileSp.sprite = null;
-        //GetComponent<BoxCollider2D>().enabled = false;
 
         yield return null;
     }
