@@ -9,10 +9,10 @@ public class ParticleEfManager : MonoBehaviour
     ParticleSystem.ForceOverLifetimeModule forceMod;
     private void Awake()
     {
-        particle.Stop();
     }
     void Start()
     {
+        particle.Stop();
         psr = GetComponent<ParticleSystemRenderer>();
        // gravityVal = -SubGravity.sp;
     }

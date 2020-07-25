@@ -7,13 +7,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject[] tilePooledObjects;
+    private GameObject spawnedTile;
     public GameObject[] pooledObjects;
+    private GameObject onlyObj;
 
     public GameObject enemy;
     public int spawnCt;
 
-    private List<GameObject> oldTileObj = new List<GameObject>();
-    private List<GameObject> oldObj = new List<GameObject>();
+    //private List<GameObject> oldTileObj = new List<GameObject>();
+    //private List<GameObject> oldObj = new List<GameObject>();
+    Queue<GameObject> oldTileObj = new Queue<GameObject>();
+    Queue<GameObject> oldObj = new Queue<GameObject>();
+    public Transform tileSpawnPos;
     public Transform spawnPos;
     public float xAxisRandom;
     public float tileDelay;
@@ -23,22 +28,22 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
     }
     void Start()
     {
+        Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, delay);
         for(int i = 0; i < spawnCt; i++)
         {
-            var localObj = Instantiate(enemy, transform.position, Quaternion.identity);
-            localObj.transform.parent = spawnPos.transform;
-            localObj.SetActive(false);
+            onlyObj = Instantiate(enemy, transform.position, Quaternion.identity);
+            onlyObj.transform.parent = spawnPos.transform;
+            onlyObj.SetActive(false);
         }
 
         for (int i = 0; i < tilePooledObjects.Length; i++)
         {
-            var localObj = Instantiate(tilePooledObjects[i], transform.position, Quaternion.identity);
-            localObj.transform.parent = spawnPos.transform;
-            localObj.SetActive(false);
+            spawnedTile = Instantiate(tilePooledObjects[i], transform.position, Quaternion.identity);
+            spawnedTile.transform.parent = tileSpawnPos.transform;
+            spawnedTile.SetActive(false);
         }
         GetRandomPooledObject();
         GetPooledObject();
@@ -48,48 +53,57 @@ public class GameManager : MonoBehaviour
     {
         int randomIndex = Random.Range(0, tilePooledObjects.Length);
         Debug.Log("Index" + randomIndex);
-        GameObject go = tilePooledObjects[randomIndex];
-        GameObject[] allChildren = GetComponentsInChildren<GameObject>();
-        foreach (GameObject child in allChildren)
-        {
-            child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-            child.GetComponent<BoxCollider2D>().enabled = true;
-        }
-        go.gameObject.transform.position = new Vector3(transform.position.x, -spawnPos.position.y, transform.position.z);
-        go.SetActive(true);
-        oldTileObj.Add(go);
 
+        Transform go = tileSpawnPos.transform.GetChild(randomIndex);
+
+        for (int i = 0; i < go.transform.childCount; i++)
+        {
+            go.GetChild(i).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            go.GetChild(i).GetComponent<BoxCollider2D>().enabled = true;
+        
+
+        }
+        
+
+        go.gameObject.transform.position = new Vector3(transform.position.x, -tileSpawnPos.position.y, transform.position.z);
+        go.gameObject.SetActive(true);
+        oldTileObj.Enqueue(go.gameObject);
+        
         return null;
     }
-    public void TileDestroyed()
+    public void TileDestroy()
     {
-        oldTileObj[0].SetActive(false);
-        oldTileObj.RemoveAt(0);
+        oldTileObj.Dequeue();
         Invoke("GetRandomPooledObject", tileDelay);
+        oldTileObj.Peek().SetActive(false);
         //GetRandomPooledObject();
     }
-
+    
     public GameObject GetPooledObject()
     {
         Debug.Log("실행");
         float xAxis = Random.Range(-xAxisRandom, xAxisRandom);
-        GameObject go = pooledObjects[poolCt];
+        Transform go = spawnPos.transform.GetChild(poolCt);
         poolCt++;
+        if(poolCt > spawnPos.transform.childCount)
+        {
+            poolCt = 0;
+        }
         go.gameObject.transform.position = new Vector3(xAxis, -spawnPos.position.y, transform.position.z);
-        go.SetActive(true);
-        oldObj.Add(go);
+        go.gameObject.SetActive(true);
+        oldObj.Enqueue(go.gameObject);
 
         return null;
     }
-
-    public void Destroyed()
+    
+    public void ObjDestroy()
     {
-        oldObj[0].SetActive(false);
-        oldObj.RemoveAt(0);
+        oldObj.Peek().SetActive(false);
+        oldObj.Dequeue();
         Invoke("GetPooledObject", delay);
         //GetPooledObject();
     }
-
+    
 
 
 }

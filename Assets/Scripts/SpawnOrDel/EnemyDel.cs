@@ -7,7 +7,7 @@ public class EnemyDel : MonoBehaviour
             if (other.gameObject.tag == "Enemy")
             {
                 EnemySpawner.EnemyCt--;
-                GameManager.Instance.Destroyed();
+                GameManager.Instance.ObjDestroy();
             }
             //Destroy(other.gameObject); // 다른 오브젝트 파괴
     }
