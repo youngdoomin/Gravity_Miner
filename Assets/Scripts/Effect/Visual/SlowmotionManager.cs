@@ -69,11 +69,11 @@ public class SlowmotionManager : MonoBehaviour
 
     public void OpenPopup(int i)
     {
-
         settingPopup[i].SetActive(true);
         isPaused = true;
         Time.timeScale = 0;
     }
+
     private void ClosePopup()
     {
         foreach (GameObject uiPopup in settingPopup)

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 [System.Serializable]
 public class Boundary
 {
@@ -7,6 +8,7 @@ public class Boundary
 }
 public class Playercontroller : MonoBehaviour
 {
+    public AudioMixerGroup SfxGroup;
     public Boundary boundary;
     public float movespeed = 7f;    //이동 속도
     public int invinTime;   // 무적 시간
@@ -54,9 +56,12 @@ public class Playercontroller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         PAudio = gameObject.AddComponent<AudioSource>();
         PAudio.loop = false;
+        PAudio.outputAudioMixerGroup = SfxGroup;
+
         EAudio = gameObject.AddComponent<AudioSource>();
         EAudio.clip = mallDie;
         EAudio.loop = false;
+        EAudio.outputAudioMixerGroup = SfxGroup;
 
         life = maxLife;
         energy = PGravity.fenergy;
