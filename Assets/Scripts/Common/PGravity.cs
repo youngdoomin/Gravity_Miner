@@ -26,7 +26,6 @@ public class PGravity : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W) && SubGravity.sp > 0 || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) //wasd중 아무키나 누르면
             {
-                AudioMixerManager.Instance.Setlowpass(AudioMixerManager.Instance.lowpassOn);
                 UseSkill(); // 에너지 감소 함수 호출
                 if (Input.GetKey(KeyCode.A)) //방향키 별로 다른 방향으로 이동시킴
                 {
@@ -59,7 +58,6 @@ public class PGravity : MonoBehaviour
             else
             {
                 OutPower();
-                AudioMixerManager.Instance.Setlowpass(AudioMixerManager.Instance.lowpassOff);
             }
         }
         else
