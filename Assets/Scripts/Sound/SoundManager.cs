@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BGMManager : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
 
-    private AudioSource audioSource;
+    private AudioSource bgmSource;
+    private AudioSource effectSource;
+    public AudioClip fullSpeed;
+    public AudioClip blockEf;
+    public AudioClip damage;
+    public AudioClip kill;
+    public AudioClip lootItem;
+
     [SerializeField] private AudioClip[] bgmClip;
 
     public int audioNumber;
     [SerializeField] private int introPool = 3;
 
-    public static BGMManager instance = null;
-    public static BGMManager Instance
+    public static SoundManager instance = null;
+    public static SoundManager Instance
     {
         get { return instance; }
     }
@@ -31,8 +38,15 @@ public class BGMManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        audioSource = GetComponent<AudioSource>();
-        audioSource.loop = true;
+
+
+        GameObject child = new GameObject("BGM");
+        child.transform.SetParent(transform);
+        bgmSource = child.AddComponent<AudioSource>();
+        bgmSource.loop = true;
+
+        effectSource = GetComponent<AudioSource>();
+        effectSource.loop = false;
     }
     void Start()
     {
@@ -60,11 +74,18 @@ public class BGMManager : MonoBehaviour
 
      public void ChangeClip(int num)
     {
-        audioSource.Stop();
+        bgmSource.Stop();
         audioNumber = num;
-        audioSource.clip = bgmClip[num];
-        audioSource.Play();
+        bgmSource.clip = bgmClip[num];
+        bgmSource.Play();
 
+    }
+
+    public void PlaySE(AudioClip clip)
+    {
+        effectSource.Stop();
+        effectSource.clip = clip;
+        effectSource.Play();
     }
     
 }

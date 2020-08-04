@@ -11,6 +11,7 @@ public class SlowmotionManager : MonoBehaviour
     public static bool isPaused = false;
     private string stScene = "Flower_Rain";
     public GameObject[] settingPopup;
+
     private void Start()
     {
         if (stScene == SceneManager.GetActiveScene().name)
@@ -51,7 +52,7 @@ public class SlowmotionManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Start_Screen", LoadSceneMode.Single);
-        BGMManager.instance.PlayRandomIntro();
+        SoundManager.instance.PlayRandomIntro();
     }
 
     public void again()

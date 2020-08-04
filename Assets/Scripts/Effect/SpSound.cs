@@ -2,16 +2,7 @@
 
 public class SpSound : MonoBehaviour
 {
-    private AudioSource SpAudio;
-    public AudioClip JamSound;
     private bool dontLoop;
-
-    void Start()
-    {
-        SpAudio = gameObject.AddComponent<AudioSource>();
-        SpAudio.clip = JamSound;
-        SpAudio.loop = false;
-    }
 
     // Update is called once per frame
     void Update()
@@ -20,7 +11,7 @@ public class SpSound : MonoBehaviour
         {
             if (dontLoop == false)
             {
-                SpAudio.Play();
+                SoundManager.instance.PlaySE(SoundManager.instance.fullSpeed);
                 dontLoop = true;
             }
         }

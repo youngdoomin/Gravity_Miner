@@ -7,16 +7,7 @@ public class Jam_ReturnSprite : MonoBehaviour
     public Sprite UI_img;
     public int jamID;
     public static Sprite cJamUI;
-    //private AudioSource SE;
-    //public AudioClip jamSE;
-    /*
-    private void Start()
-    {
-        SE = gameObject.AddComponent<AudioSource>();
-        SE.clip = jamSE;
-        SE.loop = false;
-    }
-    */
+
     void Update()
     {
 

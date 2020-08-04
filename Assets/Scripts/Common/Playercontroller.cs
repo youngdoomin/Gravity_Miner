@@ -8,7 +8,6 @@ public class Boundary
 }
 public class Playercontroller : MonoBehaviour
 {
-    public AudioMixerGroup SfxGroup;
     public Boundary boundary;
     public float movespeed = 7f;    //이동 속도
     public int invinTime;   // 무적 시간
@@ -34,11 +33,7 @@ public class Playercontroller : MonoBehaviour
     public Sprite Kill;
     public Sprite Fall;
 
-    private AudioSource PAudio;
-    public AudioClip DamSound;
-    private AudioSource EAudio;
-    public AudioClip mallDie;
-    public AudioClip itemSound;
+
 
     public static bool killLoop = false;
     public static bool comboActive = false;
@@ -54,14 +49,6 @@ public class Playercontroller : MonoBehaviour
     {
         //cjumpP = jumpP;
         rb = GetComponent<Rigidbody2D>();
-        PAudio = gameObject.AddComponent<AudioSource>();
-        PAudio.loop = false;
-        PAudio.outputAudioMixerGroup = SfxGroup;
-
-        EAudio = gameObject.AddComponent<AudioSource>();
-        EAudio.clip = mallDie;
-        EAudio.loop = false;
-        EAudio.outputAudioMixerGroup = SfxGroup;
 
         life = maxLife;
         energy = PGravity.fenergy;
@@ -82,8 +69,7 @@ public class Playercontroller : MonoBehaviour
         }
         if (kill && !killLoop)
         {
-            //sR.sprite = Kill;  // 적 없애는 스프라이트
-            EAudio.Play();
+            SoundManager.instance.PlaySE(SoundManager.instance.kill);
             killLoop = true;
         }
         /*
@@ -151,8 +137,7 @@ public class Playercontroller : MonoBehaviour
 
         else if (collision.gameObject.tag == "jam" || collision.gameObject.tag == "item")
         {
-            PAudio.clip = itemSound;
-            PAudio.Play();
+            SoundManager.instance.PlaySE(SoundManager.instance.lootItem);
         }
     }
 
@@ -167,8 +152,7 @@ public class Playercontroller : MonoBehaviour
         HPManager.TakeDamage(life);
         sR.sprite = Damaged;
         GroundDam = false;
-        PAudio.clip = DamSound;
-        PAudio.Play();
+        SoundManager.instance.PlaySE(SoundManager.instance.damage);
         if (life == 0)
         {
             StartCoroutine(Death());

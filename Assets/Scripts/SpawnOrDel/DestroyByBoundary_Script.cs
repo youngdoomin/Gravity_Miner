@@ -4,6 +4,7 @@ public class DestroyByBoundary_Script : MonoBehaviour
 {
     
     //Called when the Trigger Exit
+    /*
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Enemy" && EnemySpawner.EnemyCt < 5)
@@ -12,6 +13,7 @@ public class DestroyByBoundary_Script : MonoBehaviour
         if (col.gameObject.tag == "TileMap")// && TilemapSpawner.tileCt < 4)
             this.gameObject.BroadcastMessage("AfterTilemapSpawn", col.gameObject.transform.position.y + 10);
     }
+    */
     void OnTriggerExit2D(Collider2D other)  // 다른 오브젝트가 나가면
     {
         if (other.gameObject.tag == "TileMap")
@@ -20,6 +22,10 @@ public class DestroyByBoundary_Script : MonoBehaviour
             //Destroy(other.gameObject); // 다른 오브젝트 파괴
             GameManager.Instance.TileDestroy();
         }  
+        else if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "pad" || other.gameObject.tag == "Platform_jam")
+        {
+            GameManager.Instance.ObjDestroy(other.gameObject);
+        }
 	}
 
 }

@@ -17,12 +17,15 @@ public class GameManager : MonoBehaviour
     //private List<GameObject> oldTileObj = new List<GameObject>();
     //private List<GameObject> oldObj = new List<GameObject>();
     Queue<GameObject> oldTileObj = new Queue<GameObject>();
-    Queue<GameObject> oldObj = new Queue<GameObject>();
+    Queue<GameObject> oldItemObj = new Queue<GameObject>();
+    Queue<GameObject> oldEnemyObj = new Queue<GameObject>();
     public Transform tileSpawnPos;
-    public Transform spawnPos;
+    public Transform enemySpawnPos;
+    public Transform itemSpawnPos;
     public float xAxisRandom;
     public float tileDelay;
-    public float delay;
+    public float enemyDelay;
+    public float itemDelay;
 
     int poolCt;
     private void Awake()
@@ -31,13 +34,23 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, delay);
+        Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, enemyDelay);
         for(int i = 0; i < spawnCt; i++)
         {
             onlyObj = Instantiate(enemy, transform.position, Quaternion.identity);
-            onlyObj.transform.parent = spawnPos.transform;
+            onlyObj.transform.parent = enemySpawnPos.transform;
             onlyObj.SetActive(false);
         }
+        GetPooledObject(enemy, enemySpawnPos.transform);
+
+        for (int i = 0; i < pooledObjects.Length; i++)
+        {
+            onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
+            onlyObj.transform.parent = itemSpawnPos.transform;
+            onlyObj.SetActive(false);
+        }
+        int randomIndex = Random.Range(0, pooledObjects.Length);
+        GetPooledObject(pooledObjects[randomIndex], itemSpawnPos.transform);
 
         for (int i = 0; i < tilePooledObjects.Length; i++)
         {
@@ -46,7 +59,7 @@ public class GameManager : MonoBehaviour
             spawnedTile.SetActive(false);
         }
         GetRandomPooledObject();
-        GetPooledObject();
+        
     }
 
     public GameObject GetRandomPooledObject()
@@ -73,37 +86,61 @@ public class GameManager : MonoBehaviour
     }
     public void TileDestroy()
     {
+        oldTileObj.Peek().SetActive(false);
         oldTileObj.Dequeue();
         Invoke("GetRandomPooledObject", tileDelay);
-        oldTileObj.Peek().SetActive(false);
         //GetRandomPooledObject();
     }
     
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject(GameObject obj, Transform tr)
     {
-        Debug.Log("실행");
+        Debug.Log(tr);
         float xAxis = Random.Range(-xAxisRandom, xAxisRandom);
-        Transform go = spawnPos.transform.GetChild(poolCt);
+        Transform go = tr.GetChild(poolCt);
         poolCt++;
-        if(poolCt > spawnPos.transform.childCount)
+        if(poolCt == tr.transform.childCount)
         {
             poolCt = 0;
         }
-        go.gameObject.transform.position = new Vector3(xAxis, -spawnPos.position.y, transform.position.z);
+        go.gameObject.transform.position = new Vector3(xAxis, -tr.position.y, transform.position.z);
         go.gameObject.SetActive(true);
-        oldObj.Enqueue(go.gameObject);
+        Debug.Log(go.gameObject);
+        if(tr.gameObject.tag == "Enemy")
+        {
+            oldEnemyObj.Enqueue(go.gameObject);
+
+        }
+        else
+        {
+            oldItemObj.Enqueue(go.gameObject);
+        }
 
         return null;
     }
     
-    public void ObjDestroy()
+    public void ObjDestroy(GameObject obj)
     {
-        oldObj.Peek().SetActive(false);
-        oldObj.Dequeue();
-        Invoke("GetPooledObject", delay);
+        if(obj == enemy)
+        {
+            oldEnemyObj.Peek().SetActive(false);
+            oldEnemyObj.Dequeue();
+            StartCoroutine(wait(enemyDelay));
+            GetPooledObject(enemy, enemySpawnPos.transform);
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, pooledObjects.Length);
+            oldItemObj.Peek().SetActive(false);
+            oldItemObj.Dequeue();
+            StartCoroutine(wait(itemDelay));
+            GetPooledObject(pooledObjects[randomIndex], itemSpawnPos.transform);
+        }
         //GetPooledObject();
     }
     
-
+    IEnumerator wait(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+    }
 
 }
