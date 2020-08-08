@@ -36,7 +36,7 @@ public class Jam_ReturnSprite : MonoBehaviour
     void JamReturn()
     {
         getJam = true;
-        var jamSpawn = GameObject.FindGameObjectWithTag("JamSpawn");
+        var jamSpawn = GameObject.FindGameObjectWithTag("Boundary");
         jamSpawn.SendMessage("Pickup", jamID);
 
         //jamSpawn.SendMessage("Pickup", this);

@@ -12,7 +12,6 @@ public class Jam_random : MonoBehaviour
     private GameObject gridObj;
     private int bf;
     GameObject UIfinder;
-    private Sprite[] jamEqual;
     // Start is called before the first frame update
     void Start()
     {

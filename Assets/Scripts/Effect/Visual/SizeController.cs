@@ -27,6 +27,6 @@ public class SizeController : MonoBehaviour
         
 
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

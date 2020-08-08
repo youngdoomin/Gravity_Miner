@@ -45,6 +45,7 @@ public class ParticleEfManager : MonoBehaviour
         }
         else
         {
+            gameObject.SetActive(false);
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
         }
         particle.gravityModifier = gravityVal;
@@ -73,6 +74,7 @@ public class ParticleEfManager : MonoBehaviour
 
     IEnumerator ParticlePlay()
     {
+        gameObject.SetActive(true);
         particle.Play();
         //particle.startLifetime = 0;
         yield return null;
