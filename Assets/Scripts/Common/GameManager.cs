@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     List<int> list = new List<int>() { 0, 1, 2, 3, 4 };
     private int bf;
     GameObject UIfinder;
+    GameObject PlayerFinder;
 
     public GameObject[] tilePooledObjects;
     public float tilediff = 500;
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UIfinder = GameObject.Find("JamManager");
+        PlayerFinder = GameObject.Find("Player");
 
         Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, enemyDelay);
 
@@ -63,17 +65,15 @@ public class GameManager : MonoBehaviour
             onlyObj.transform.parent = jamSpawnPos.transform;
             onlyObj.SetActive(false);
         }
-        int jamRandom = Random.Range(0, jamBlocks.Length);
-        //GetJamPooledObject(jamBlocks[jamRandom], jamSpawnPos.transform);
-
+        CallJamRandom(jamSpawnPos);
+        
         for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
         {
             onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
             onlyObj.transform.parent = itemSpawnPos.transform;
             onlyObj.SetActive(false);
         }
-        int randomIndex = Random.Range(0, pooledObjects.Length);
-        //GetPooledObject(pooledObjects[randomIndex], itemSpawnPos.transform);
+        CallItemRandom(itemSpawnPos);
 
         for (int i = 0; i < tilePooledObjects.Length; i++)
         {
@@ -97,6 +97,21 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void CallJamRandom(Transform pos)
+    {
+
+        int jamRandom = Random.Range(0, jamBlocks.Length);
+        GetJamPooledObject(jamBlocks[jamRandom], pos);
+
+    }
+
+    public void CallItemRandom(Transform pos)
+    {
+
+        int randomIndex = Random.Range(0, pooledObjects.Length);
+        GetPooledObject(pooledObjects[randomIndex], itemSpawnPos.transform);
+
+    }
 
     void Pickup(int jamID)
     {
@@ -167,7 +182,7 @@ public class GameManager : MonoBehaviour
         }
         
 
-        go.gameObject.transform.position = new Vector3(transform.position.x, -tileSpawnPos.position.y, transform.position.z);
+        go.gameObject.transform.position = new Vector3(transform.position.x, PlayerFinder.transform.position.y - 20, transform.position.z);
         go.gameObject.SetActive(true);
         oldTileObj.Enqueue(go.gameObject);
         
@@ -184,16 +199,16 @@ public class GameManager : MonoBehaviour
     public GameObject GetPooledObject(GameObject obj, Transform tr)
     {
         Debug.Log(tr);
-        ;
+        
         Transform go = tr.GetChild(poolCt);
         poolCt++;
-        if(poolCt == tr.transform.childCount)
+        if(poolCt > tr.transform.childCount)
         {
             poolCt = 0;
         }
         go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         go.GetComponent<BoxCollider2D>().enabled = true;
-        go.gameObject.transform.position = new Vector3(xAxis, -tr.position.y, transform.position.z);
+        go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 20, transform.position.z);
         go.gameObject.SetActive(true);
         Debug.Log(go.gameObject);
         if(tr.gameObject.tag == "Enemy")
@@ -213,16 +228,16 @@ public class GameManager : MonoBehaviour
         return null;
     }
     
-    public void ObjDestroy(GameObject obj)
+    public void ObjDestroy(string str)
     {
-        if(obj == enemy)
+        if(str == "enemy")
         {
             oldEnemyObj.Peek().SetActive(false);
             oldEnemyObj.Dequeue();
             StartCoroutine(wait(enemyDelay));
             GetPooledObject(enemy, enemySpawnPos.transform);
         }
-        else if(obj.tag == "Platform_jam" || obj.tag == "jam")
+        else if(str == "jam")
         {
             int randomIndex = Random.Range(0, jamBlocks.Length);
             oldJamObj.Peek().SetActive(false);

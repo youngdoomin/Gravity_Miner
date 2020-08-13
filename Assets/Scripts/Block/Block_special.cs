@@ -2,33 +2,33 @@
 
 public class Block_special : MonoBehaviour
 {
-    public GameObject[] item;
     public static bool shieldOn;
-    /*
-    private void OnTriggerEnter2D(Collider2D coll)
+    enum Item
     {
-
-
+        Heart,
+        Mana,
+        Shield
     }
-    */
+    [SerializeField]
+    Item Type;
     private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.name == "Player")
         {
-            if (this.gameObject == item[0] && Playercontroller.maxLife != Playercontroller.life)
+            if (Type == Item.Heart && Playercontroller.maxLife != Playercontroller.life)
             {
                 Playercontroller.life++;
                 HPManager.Heal(Playercontroller.life);
             }
-            else if (this.gameObject == item[1])
+            else if (Type == Item.Mana)
             {
                 Playercontroller.energy = PGravity.fenergy;
             }
-            else if (this.gameObject == item[2])
+            else if (Type == Item.Shield)
             {
                 shieldOn = true;
             }
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
         
     }

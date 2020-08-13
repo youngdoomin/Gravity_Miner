@@ -74,7 +74,6 @@ public class ParticleEfManager : MonoBehaviour
 
     IEnumerator ParticlePlay()
     {
-        gameObject.SetActive(true);
         particle.Play();
         //particle.startLifetime = 0;
         yield return null;

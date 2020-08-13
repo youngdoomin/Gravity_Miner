@@ -22,10 +22,18 @@ public class DestroyByBoundary_Script : MonoBehaviour
             //Destroy(other.gameObject); // 다른 오브젝트 파괴
             GameManager.Instance.TileDestroy();
         }  
-        else if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "pad" || other.gameObject.tag == "Platform_jam")
+        else if(other.gameObject.tag == "SpawnBox_Enemy")
         {
-            GameManager.Instance.ObjDestroy(other.gameObject);
+            GameManager.Instance.ObjDestroy("enemy");
         }
-	}
+        else if (other.gameObject.tag == "SpawnBox_Jam")
+        {
+            GameManager.Instance.ObjDestroy("jam");
+        }
+        else if (other.gameObject.tag == "SpawnBox_Item")
+        {
+            GameManager.Instance.ObjDestroy("else");
+        }
+    }
 
 }

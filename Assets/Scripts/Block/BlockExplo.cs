@@ -19,9 +19,11 @@ public class BlockExplo : MonoBehaviour
             Collider2D[] explo = Physics2D.OverlapCircleAll(gameObject.transform.position, exploRange);
             foreach (var col in explo)
             {
+
                 col.SendMessage("Destruct");
-                col.SendMessage("BrEf");
-                col.SendMessage("EnemyExDel");
+                //col.SendMessage("BrEf");
+                col.SendMessage("EnemyExDel"); 
+
                 //Destroy(col.gameObject);
             }
         }

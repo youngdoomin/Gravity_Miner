@@ -22,12 +22,13 @@ public class SubGravity : MonoBehaviour
 
         if (!Playercontroller.kill && !DestructTile.tileBreak) //평소 상태
         {
+            transform.Translate(Vector2.up * Time.fixedDeltaTime * sp);
             Playercontroller.killLoop = false;
             reaction = false;
+
             if (sp < speedLock)
                 sp += Time.fixedDeltaTime * sp / divide;
 
-            transform.Translate(Vector2.up * Time.fixedDeltaTime * sp);
             if ((Input.GetKey(KeyCode.W) && sp > 0 && sp < speedLock && Playercontroller.energy >= 0) || (sp < PGravity.power))
             {
                 sp += Time.fixedDeltaTime * PGravity.power / divide;
@@ -58,6 +59,7 @@ public class SubGravity : MonoBehaviour
         Playercontroller.kill = false; //초기화
 
         DestructTile.tileBreak = false;
+        //Debug.Log("Wait");
     }
 }
 
