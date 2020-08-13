@@ -3,17 +3,19 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
+    
     private Text scoreUI;   // 텍스트
     public Text highScore; // 최고점수
     private Text finScore; // 게임 종료 점수
     public Text finHighScore;
+    [SerializeField]
     private string exhi = "HighScore";
     public static float scoreCt = 0;    // 점수 받는 변수
     public static bool scorecap = false;
     public static bool scoreActive = true;
 
+    [SerializeField]
     private int hiScoreCt = 0;
-    // Start is called before the first frame update
     public GameObject endPopup;
 
     private string digit = "1";
@@ -21,8 +23,9 @@ public class Score : MonoBehaviour
 
     void Start()
     {
-        hiScoreCt = PlayerPrefs.GetInt(exhi, 0);
-        highScore.text = hiScoreCt.ToString("0");
+
+        hiScoreCt = AccountInfoManager.account.info.hiScore;
+        //highScore.text = hiScoreCt.ToString("00000");
         scoreUI = GameObject.Find("ScoreVal").GetComponent<Text>();    // 스코어라는 text탐색
 
         scoreCt = 0;    // 점수 받는 변수
@@ -34,10 +37,12 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (scoreCt >= hiScoreCt)
+        if ((int)scoreCt > hiScoreCt)
         {
+            hiScoreCt = (int)scoreCt;
+            AccountInfoManager.account.info.NewHiScore((int)scoreCt);
             PlayerPrefs.SetInt(exhi, (int)scoreCt);
-            highScore.text = scoreUI.text;
+            //highScore.text = scoreUI.text;
         }
         if (int.Parse(highScore.text) > int.Parse(digit))
         {
@@ -100,6 +105,6 @@ public class Score : MonoBehaviour
     {
         PlayerPrefs.DeleteKey(exhi);
     }
-
+    
 
 }
