@@ -11,12 +11,12 @@ public class ParticleFollow : MonoBehaviour
         var main = particle.main;
         if (particle.isPlaying)
         {
-            //gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, this.gameObject.transform.position.z);
             this.gameObject.transform.SetParent(gridObj);
             //main.simulationSpace = ParticleSystemSimulationSpace.World;
         }
         else
         {
+            gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, this.gameObject.transform.position.z);
             this.gameObject.transform.SetParent(player);
             //main.simulationSpace = ParticleSystemSimulationSpace.Local;
         }

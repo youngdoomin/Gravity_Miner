@@ -9,6 +9,8 @@ public class DestructTile : MonoBehaviour
     {
         //particle.SetActive(false);
         tileSp = GetComponent<SpriteRenderer>();
+        GetComponent<ParticleSystem>().Stop();
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,9 +34,9 @@ public class DestructTile : MonoBehaviour
         //particle.SetActive(true);
         //this.gameObject.BroadcastMessage("ParticlePlay");
         tileSp.color = new Color(1,1,1,0);
-        gameObject.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
-        //tileSp.sprite = null;
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
+        GetComponent<ParticleSystem>().Play();
         yield return null;
     }
 }

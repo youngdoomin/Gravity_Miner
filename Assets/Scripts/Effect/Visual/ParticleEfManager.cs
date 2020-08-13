@@ -10,6 +10,11 @@ public class ParticleEfManager : MonoBehaviour
     private void Awake()
     {
     }
+
+    private void OnEnable()
+    {
+        particle.Play();
+    }
     void Start()
     {
         particle.Stop();
@@ -71,11 +76,12 @@ public class ParticleEfManager : MonoBehaviour
             forceMod.x = 0;
         }
     }
-
+    /*
     IEnumerator ParticlePlay()
     {
         particle.Play();
         //particle.startLifetime = 0;
         yield return null;
     }
+    */
 }

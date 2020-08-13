@@ -2,6 +2,12 @@
 
 public class Item_random : MonoBehaviour
 {
+    private void Start()
+    {
+        int randomIdx = Random.Range(0, transform.childCount - 1);
+        transform.GetChild(randomIdx).gameObject.SetActive(true);
+    }
+    /*
     enum ItemType
     {
         Item,
@@ -15,4 +21,5 @@ public class Item_random : MonoBehaviour
         if (Type == ItemType.Item) { GameManager.Instance.CallItemRandom(this.gameObject.transform); }
         else { GameManager.Instance.CallJamRandom(this.gameObject.transform); }
     }
+    */
 }
