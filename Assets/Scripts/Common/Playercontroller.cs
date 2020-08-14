@@ -222,7 +222,7 @@ public class Playercontroller : MonoBehaviour
         Time.timeScale = 0.2f;
         yield return new WaitForSeconds(1);
         var uiPopup = GameObject.FindGameObjectWithTag("UI_Controller");
-        uiPopup.SendMessage("OpenPopup", 1);
+        uiPopup.SendMessage("OpenPopup", 2);
     }
 }
 /*

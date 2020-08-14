@@ -50,7 +50,7 @@ public class ParticleEfManager : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
         }
         particle.gravityModifier = gravityVal;
