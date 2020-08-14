@@ -7,13 +7,22 @@ public class SubGravity : MonoBehaviour
     public static float sp = Gravity.l;
     public static bool reaction = false;
     public int divide;
+    bool dontLoop;
 
     void Update()
     {
         if (sp >= speedLock)
         {
             sp = speedLock;
+            if (dontLoop == false)
+            {
+                SoundManager.instance.PlaySE(SoundManager.instance.fullSpeed);
+                dontLoop = true;
+            }
         }
+        else
+        { dontLoop = false; }
+    
         if (sp > Gravity.enerInc)
             Playercontroller.energy += Time.deltaTime;
     }
