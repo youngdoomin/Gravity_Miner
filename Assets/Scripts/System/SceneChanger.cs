@@ -11,7 +11,6 @@ public class SceneChanger : MonoBehaviour
         for (int i = 0; i < keepObj.Length; i++)
         {
             DontDestroyOnLoad(keepObj[i]);
-
         }
     }
     // Start is called before the first frame update

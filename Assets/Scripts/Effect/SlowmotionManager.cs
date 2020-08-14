@@ -23,31 +23,43 @@ public class SlowmotionManager : MonoBehaviour
     }
     void Update()
     {
-        if (Playercontroller.life > 0)
+        if ((stScene == SceneManager.GetActiveScene().name))
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
+            if (Playercontroller.life > 0)
             {
-                isPaused = !isPaused;   // 일시정지 온오프
-                if (isPaused == true)    //일시정지가 밎다면
-                { OpenPopup(0); } // 시간 멈춤
-                else                    //아니면
-                { PlayTime(); } // 시간 흐름
+                if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
+                { TimeSwitch(0); }
+                else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
+                if (isPaused != true)
+                { SlowMotion(); }
+
             }
-            if (isPaused != true)
-            { SlowMotion(); }
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            else
             {
-                goHome();
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    goHome();
+                }
+                else if (Input.GetKeyDown("return"))
+                {
+                    again();
+                }
             }
-            else if (Input.GetKeyDown("return"))
-            {
-                again();
-            }
+
+
+
         }
     }
+
+    void TimeSwitch(int i)
+    {
+        isPaused = !isPaused;   // 일시정지 온오프
+        if (isPaused == true)    //일시정지가 밎다면
+        { OpenPopup(i); } // 시간 멈춤
+        else                    //아니면
+        { PlayTime(); } // 시간 흐름
+    }
+
     public void goHome()
     {
         Time.timeScale = 1;
@@ -80,8 +92,9 @@ public class SlowmotionManager : MonoBehaviour
         foreach (GameObject uiPopup in settingPopup)
             uiPopup.SetActive(false);
     }
-    public void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
+    void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
     {
+        Debug.Log("slowmotion_Active");
         if ((PGravity.screenFilter == true || Score.scoreActive == false) && (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
         {
             isSlowTime = true;

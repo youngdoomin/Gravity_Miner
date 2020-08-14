@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
         } // 인스펙터에 있는 타일 생성
         GetRandomPooledObject();
 
-        xAxis = Random.Range(-xAxisRandom, xAxisRandom);
     }
 
     void Update()
@@ -141,6 +140,7 @@ public class GameManager : MonoBehaviour
     {
         int randomIndex = 0;
 
+
         if (Score.scoreCt > 2 * tilediff)
         {
             randomIndex = Random.Range(tilePooledObjects.Length - tilePooledObjects.Length / 3, tilePooledObjects.Length - 1);
@@ -178,6 +178,7 @@ public class GameManager : MonoBehaviour
     public GameObject GetPooledObject(bool isRandom, Transform tr)
     {
         Debug.Log(tr);
+        xAxis = Random.Range(-xAxisRandom, xAxisRandom);
 
         if (isRandom)
         {
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
         Transform go = tr.GetChild(poolCt);
         go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         go.GetComponent<BoxCollider2D>().enabled = true;
-        go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 30, transform.position.z);
+        go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 30 - xAxis, transform.position.z);
         go.gameObject.SetActive(true);
         Debug.Log(go.gameObject);
         if (tr.gameObject.tag == "Enemy")
