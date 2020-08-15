@@ -13,7 +13,7 @@ public class DestructTile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && tileSp.color.a == 1) //(ColliderDetect.platformDetect == false && collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && tileSp.color.a == 1 )//|| collision.gameObject == gameObject.transform.GetChild(1)) //(ColliderDetect.platformDetect == false && collision.gameObject.tag == "Player")
         {
             StartCoroutine(Destruct());
             //Destroy(gameObject);
@@ -45,4 +45,5 @@ public class DestructTile : MonoBehaviour
         tileSp.color = new Color(1, 1, 1, 0);
         yield return null;
     }
+
 }
