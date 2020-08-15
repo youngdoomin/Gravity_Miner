@@ -18,8 +18,6 @@ public class DestroyByBoundary_Script : MonoBehaviour
     {
         if (other.gameObject.tag == "TileMap")
         {
-            TilemapSpawner.tileCt--; 
-            //Destroy(other.gameObject); // 다른 오브젝트 파괴
             GameManager.Instance.TileDestroy();
         }  
         else if(other.gameObject.tag == "SpawnBox_Enemy")
@@ -32,7 +30,7 @@ public class DestroyByBoundary_Script : MonoBehaviour
         }
         else if (other.gameObject.tag == "SpawnBox_Item")
         {
-            GameManager.Instance.ObjDestroy("else");
+            GameManager.Instance.ObjDestroy("item");
         }
     }
 

@@ -4,11 +4,11 @@ public class Item_random : MonoBehaviour
 {
     private void OnEnable()
     {
-        for (int i = 0; i < transform.childCount - 1; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-        int randomIdx = Random.Range(0, transform.childCount - 1);
+        int randomIdx = Random.Range(0, transform.childCount);
         transform.GetChild(randomIdx).gameObject.SetActive(true);
 
     }

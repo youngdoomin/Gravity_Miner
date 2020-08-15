@@ -13,15 +13,15 @@ public class ParticleEfManager : MonoBehaviour
 
     private void OnEnable()
     {
-        particle.Play();
+        //particle.Play();
     }
     void Start()
     {
-        particle.Stop();
+        //particle.Stop();
         psr = GetComponent<ParticleSystemRenderer>();
        // gravityVal = -SubGravity.sp;
     }
-
+    /*
     void Update()
     {
         forceMod = particle.forceOverLifetime;
@@ -36,7 +36,7 @@ public class ParticleEfManager : MonoBehaviour
                 psr.maxParticleSize -= 0.1f;
 
             }
-            //particle.Stop();
+            particle.Stop();
         }
         else
         {
@@ -50,7 +50,7 @@ public class ParticleEfManager : MonoBehaviour
         }
         else
         {
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
         }
         particle.gravityModifier = gravityVal;
@@ -76,12 +76,12 @@ public class ParticleEfManager : MonoBehaviour
             forceMod.x = 0;
         }
     }
-    /*
+    */
     IEnumerator ParticlePlay()
     {
         particle.Play();
         //particle.startLifetime = 0;
         yield return null;
     }
-    */
+    
 }

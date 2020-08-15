@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    Collider2D[] blocks;
     public GameObject[] jamBlocks;
     List<int> list = new List<int>() { 0, 1, 2, 3, 4 };
     private int bf;
@@ -190,10 +191,32 @@ public class GameManager : MonoBehaviour
             poolCt = 0;
         }
 
-        Transform go = tr.GetChild(poolCt);
+        bool spawnPoss = false;
+        int safetyNet = 0;
+
+        while (!spawnPoss)
+        {
+            float spawnPosY = PlayerFinder.transform.position.y - 40 - Random.Range(0, 8);
+            Vector3 spawnPosition = new Vector3(xAxis, spawnPosY, 0);
+            spawnPoss = PreventSpawnOverlap(spawnPosition);
+
+            if (spawnPoss)
+            {
+                break;
+            }
+
+            safetyNet++;
+            if (safetyNet > 50)
+            {
+                Debug.Log("too many attempts");
+                break;
+
+            }
+        }
+            Transform go = tr.GetChild(poolCt);
         go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         go.GetComponent<BoxCollider2D>().enabled = true;
-        go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 30 - xAxis, transform.position.z);
+        go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 40 - xAxis, transform.position.z);
         go.gameObject.SetActive(true);
         Debug.Log(go.gameObject);
         if (tr.gameObject.tag == "Enemy")
@@ -206,7 +229,7 @@ public class GameManager : MonoBehaviour
         {
             oldJamObj.Enqueue(go.gameObject);
         }
-        else if (tr.gameObject.tag == "Item")
+        else
         {
             oldItemObj.Enqueue(go.gameObject);
         }
@@ -231,7 +254,7 @@ public class GameManager : MonoBehaviour
             GetJamPooledObject(jamSpawnPos.transform);
         }
 
-        else
+        else if (str == "item")
         {
             oldItemObj.Peek().SetActive(false);
             oldItemObj.Dequeue();
@@ -251,6 +274,34 @@ public class GameManager : MonoBehaviour
     IEnumerator wait(float sec)
     {
         yield return new WaitForSeconds(sec);
+    }
+
+    bool PreventSpawnOverlap(Vector3 spawnPos)
+    {
+        blocks = Physics2D.OverlapCircleAll(transform.position, 2);
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            Vector3 centerPos = blocks[i].bounds.center;
+            float width = blocks[i].bounds.extents.x;
+            float height = blocks[i].bounds.extents.y;
+
+            float leftExtent = centerPos.x - width;
+            float rightExtent = centerPos.y - height;
+            float lowerExtent = centerPos.y - height;
+            float upperExtent = centerPos.y + height;
+
+            if (spawnPos.x >= leftExtent && spawnPos.x <= rightExtent)
+            {
+                if (spawnPos.y >= lowerExtent && spawnPos.y <= upperExtent)
+                {
+                    return false;
+                }
+            }
+
+        }
+        return true;
+
     }
 
 }

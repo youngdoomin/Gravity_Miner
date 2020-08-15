@@ -37,8 +37,11 @@ public class DestructTile : MonoBehaviour
             this.gameObject.SendMessage("SpawnJam");
 
         }
+
+
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        gameObject.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
+        //gameObject.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().Play();
+        gameObject.transform.GetChild(0).SendMessage("ParticlePlay");
         tileSp.color = new Color(1, 1, 1, 0);
         yield return null;
     }
