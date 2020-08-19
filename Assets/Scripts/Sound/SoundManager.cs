@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip damage;
     public AudioClip kill;
     public AudioClip lootItem;
+    public AudioMixerGroup bgmOutput;
 
     [SerializeField] private AudioClip[] bgmClip;
 
@@ -44,6 +46,7 @@ public class SoundManager : MonoBehaviour
         child.transform.SetParent(transform);
         bgmSource = child.AddComponent<AudioSource>();
         bgmSource.loop = true;
+        bgmSource.outputAudioMixerGroup = bgmOutput;
 
         effectSource = GetComponent<AudioSource>();
         effectSource.loop = false;
