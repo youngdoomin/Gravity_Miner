@@ -23,7 +23,7 @@ public class SlowmotionManager : MonoBehaviour
     }
     void Update()
     {
-        if ((stScene == SceneManager.GetActiveScene().name))
+        if (stScene == SceneManager.GetActiveScene().name)
         {
             if (Playercontroller.life > 0)
             {
@@ -49,6 +49,12 @@ public class SlowmotionManager : MonoBehaviour
 
 
         }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
+            { TimeSwitch(0); }
+            else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
+        }
     }
 
     void TimeSwitch(int i)
@@ -65,12 +71,14 @@ public class SlowmotionManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Start_Screen", LoadSceneMode.Single);
         SoundManager.instance.PlayRandomIntro();
+        ClosePopup();
     }
 
     public void again()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ClosePopup();
     }
 
     public void PlayTime()
@@ -95,7 +103,7 @@ public class SlowmotionManager : MonoBehaviour
     void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
     {
         Debug.Log("slowmotion_Active");
-        if ((PGravity.screenFilter == true || Score.scoreActive == false) && (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
+        if ((PGravity.screenFilter == true || Score.scoreActive == false)) //&& (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
         {
             isSlowTime = true;
             Time.timeScale = slowmotionScale;

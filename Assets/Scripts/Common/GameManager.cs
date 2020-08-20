@@ -24,10 +24,10 @@ public class GameManager : MonoBehaviour
 
     //private List<GameObject> oldTileObj = new List<GameObject>();
     //private List<GameObject> oldObj = new List<GameObject>();
-    Queue<GameObject> oldTileObj = new Queue<GameObject>();
-    Queue<GameObject> oldItemObj = new Queue<GameObject>();
-    Queue<GameObject> oldEnemyObj = new Queue<GameObject>();
-    Queue<GameObject> oldJamObj = new Queue<GameObject>();
+    //Queue<GameObject> oldTileObj = new Queue<GameObject>();
+    //Queue<GameObject> oldItemObj = new Queue<GameObject>();
+    //Queue<GameObject> oldEnemyObj = new Queue<GameObject>();
+    //Queue<GameObject> oldJamObj = new Queue<GameObject>();
     public Transform tileSpawnPos;
     public Transform enemySpawnPos;
     public Transform itemSpawnPos;
@@ -59,22 +59,25 @@ public class GameManager : MonoBehaviour
             onlyObj.SetActive(false);
         }
         GetPooledObject(false, enemySpawnPos.transform);
-
-        for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
+        for (int roop = 0; roop < 2; roop++)
         {
-            onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
-            onlyObj.transform.parent = jamSpawnPos.transform;
-            onlyObj.SetActive(false);
-        }
-        GetJamPooledObject(jamSpawnPos.transform);
 
-        for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
-        {
-            onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
-            onlyObj.transform.parent = itemSpawnPos.transform;
-            onlyObj.SetActive(false);
+            for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
+            {
+                onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
+                onlyObj.transform.parent = jamSpawnPos.transform;
+                onlyObj.SetActive(false);
+            }
+            GetJamPooledObject(jamSpawnPos.transform);
+
+            for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
+            {
+                onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
+                onlyObj.transform.parent = itemSpawnPos.transform;
+                onlyObj.SetActive(false);
+            }
+            GetPooledObject(true, itemSpawnPos);
         }
-        GetPooledObject(true, itemSpawnPos);
 
         for (int i = 0; i < tilePooledObjects.Length; i++)
         {
@@ -170,7 +173,7 @@ public class GameManager : MonoBehaviour
 
         go.gameObject.transform.position = new Vector3(transform.position.x, PlayerFinder.transform.position.y - 30, transform.position.z);
         go.gameObject.SetActive(true);
-        oldTileObj.Enqueue(go.gameObject);
+        //oldTileObj.Enqueue(go.gameObject);
 
         return null;
     }
@@ -184,6 +187,22 @@ public class GameManager : MonoBehaviour
         if (isRandom)
         {
             int randomIndex = Random.Range(0, tr.transform.childCount - 1);
+            int tryCt = 0;
+            while (tr.GetChild(randomIndex).gameObject.activeInHierarchy == true)
+            {
+                randomIndex = Random.Range(0, tr.transform.childCount - 1);
+
+                tryCt++;
+                if (tryCt > 50)
+                {
+                    Debug.Log("too many attempts");
+                    for (int i = 0; i < tr.childCount; i++)
+                    {
+                        tr.GetChild(i).gameObject.SetActive(false);
+                    }
+                }
+            }
+
             poolCt = randomIndex;
         }
         else if (poolCt > tr.transform.childCount)
@@ -213,7 +232,7 @@ public class GameManager : MonoBehaviour
 
             }
         }
-            Transform go = tr.GetChild(poolCt);
+        Transform go = tr.GetChild(poolCt);
         go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         go.GetComponent<BoxCollider2D>().enabled = true;
         go.gameObject.transform.position = new Vector3(xAxis, PlayerFinder.transform.position.y - 40 - xAxis, transform.position.z);
@@ -221,17 +240,17 @@ public class GameManager : MonoBehaviour
         Debug.Log(go.gameObject);
         if (tr.gameObject.tag == "Enemy")
         {
-            oldEnemyObj.Enqueue(go.gameObject);
+            //oldEnemyObj.Enqueue(go.gameObject);
             poolCt++;
 
         }
         else if (tr.gameObject.tag == "Platform_jam" || tr.tag == "jam")
         {
-            oldJamObj.Enqueue(go.gameObject);
+            //oldJamObj.Enqueue(go.gameObject);
         }
         else
         {
-            oldItemObj.Enqueue(go.gameObject);
+            //oldItemObj.Enqueue(go.gameObject);
         }
 
         return null;
@@ -241,23 +260,28 @@ public class GameManager : MonoBehaviour
     {
         if (str == "enemy")
         {
-            oldEnemyObj.Peek().SetActive(false);
-            oldEnemyObj.Dequeue();
-            StartCoroutine(wait(enemyDelay));
+            //oldEnemyObj.Peek().SetActive(false);
+            //StartCoroutine(wait(enemyDelay));
             GetPooledObject(false, enemySpawnPos.transform);
         }
         else if (str == "jam")
         {
-            oldJamObj.Peek().SetActive(false);
-            oldJamObj.Dequeue();
+            //var peekObj = oldJamObj.Peek();
+            //peekObj.transform.GetChild(peekObj.transform.childCount - 2).gameObject.SetActive(false);
+            //peekObj.SetActive(false);
+            //oldJamObj.Peek().SetActive(false);
+            //oldJamObj.Dequeue();
             StartCoroutine(wait(itemDelay));
             GetJamPooledObject(jamSpawnPos.transform);
         }
 
         else if (str == "item")
         {
-            oldItemObj.Peek().SetActive(false);
-            oldItemObj.Dequeue();
+            //var peekObj = oldItemObj.Peek();
+            //peekObj.transform.GetChild(peekObj.transform.childCount - 2).gameObject.SetActive(false);
+            //peekObj.SetActive(false);
+            //oldItemObj.Peek().SetActive(false);
+            //oldItemObj.Dequeue();
             StartCoroutine(wait(itemDelay));
             GetPooledObject(true, itemSpawnPos.transform);
         }
@@ -265,8 +289,8 @@ public class GameManager : MonoBehaviour
     }
     public void TileDestroy()
     {
-        oldTileObj.Peek().SetActive(false);
-        oldTileObj.Dequeue();
+        //oldTileObj.Peek().SetActive(false);
+        //oldTileObj.Dequeue();
         Invoke("GetRandomPooledObject", tileDelay);
         //GetRandomPooledObject();
     }
@@ -278,7 +302,7 @@ public class GameManager : MonoBehaviour
 
     bool PreventSpawnOverlap(Vector3 spawnPos)
     {
-        blocks = Physics2D.OverlapCircleAll(transform.position, 2);
+        blocks = Physics2D.OverlapCircleAll(transform.position, 4);
 
         for (int i = 0; i < blocks.Length; i++)
         {

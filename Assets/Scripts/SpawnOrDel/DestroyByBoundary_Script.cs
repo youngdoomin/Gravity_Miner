@@ -16,22 +16,32 @@ public class DestroyByBoundary_Script : MonoBehaviour
     */
     void OnTriggerExit2D(Collider2D other)  // 다른 오브젝트가 나가면
     {
+        
         if (other.gameObject.tag == "TileMap")
         {
+            other.gameObject.SetActive(false);
             GameManager.Instance.TileDestroy();
         }  
         else if(other.gameObject.tag == "SpawnBox_Enemy")
         {
+            other.transform.parent.gameObject.SetActive(false);
             GameManager.Instance.ObjDestroy("enemy");
         }
         else if (other.gameObject.tag == "SpawnBox_Jam")
         {
+            other.transform.parent.gameObject.transform.GetChild(other.transform.parent.transform.childCount - 2).gameObject.SetActive(false);
+            other.transform.parent.gameObject.SetActive(false);
             GameManager.Instance.ObjDestroy("jam");
         }
         else if (other.gameObject.tag == "SpawnBox_Item")
         {
+            other.transform.parent.gameObject.transform.GetChild(other.transform.parent.transform.childCount - 2).gameObject.SetActive(false);
+            other.transform.parent.gameObject.SetActive(false);
             GameManager.Instance.ObjDestroy("item");
+
         }
+        
+
     }
 
 }
