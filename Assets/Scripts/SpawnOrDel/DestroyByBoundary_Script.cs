@@ -2,6 +2,7 @@
 
 public class DestroyByBoundary_Script : MonoBehaviour 
 {
+    private int SpawnCt;
     
     //Called when the Trigger Exit
     /*
@@ -29,19 +30,40 @@ public class DestroyByBoundary_Script : MonoBehaviour
         }
         else if (other.gameObject.tag == "SpawnBox_Jam")
         {
+            SpawnCt = 0;
+            for (int i = 0; i < other.transform.parent.childCount; i++)
+            {
+                if (GameManager.Instance.jamSpawnPos.GetChild(i).gameObject.activeInHierarchy)
+                { SpawnCt++; }
+
+            }
+            if(SpawnCt < 2)
+            {
+                GameManager.Instance.ObjDestroy("jam");
+
+            }
             other.transform.parent.gameObject.transform.GetChild(other.transform.parent.transform.childCount - 2).gameObject.SetActive(false);
             other.transform.parent.gameObject.SetActive(false);
-            GameManager.Instance.ObjDestroy("jam");
+
         }
         else if (other.gameObject.tag == "SpawnBox_Item")
         {
+            SpawnCt = 0;
+            for (int i = 0; i < other.transform.parent.childCount; i++)
+            {
+                if (GameManager.Instance.itemSpawnPos.GetChild(i).gameObject.activeInHierarchy)
+                { SpawnCt++; }
+
+            }
+            if (SpawnCt < 2)
+            {
+                GameManager.Instance.ObjDestroy("item");
+            }
             other.transform.parent.gameObject.transform.GetChild(other.transform.parent.transform.childCount - 2).gameObject.SetActive(false);
             other.transform.parent.gameObject.SetActive(false);
-            GameManager.Instance.ObjDestroy("item");
-
         }
-        
 
+        Debug.Log(SpawnCt);
     }
 
 }

@@ -59,25 +59,22 @@ public class GameManager : MonoBehaviour
             onlyObj.SetActive(false);
         }
         GetPooledObject(false, enemySpawnPos.transform);
-        for (int roop = 0; roop < 2; roop++)
+
+        for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
         {
-
-            for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
-            {
-                onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
-                onlyObj.transform.parent = jamSpawnPos.transform;
-                onlyObj.SetActive(false);
-            }
-            GetJamPooledObject(jamSpawnPos.transform);
-
-            for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
-            {
-                onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
-                onlyObj.transform.parent = itemSpawnPos.transform;
-                onlyObj.SetActive(false);
-            }
-            GetPooledObject(true, itemSpawnPos);
+            onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
+            onlyObj.transform.parent = jamSpawnPos.transform;
+            onlyObj.SetActive(false);
         }
+        GetJamPooledObject(jamSpawnPos.transform);
+
+        for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
+        {
+            onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
+            onlyObj.transform.parent = itemSpawnPos.transform;
+            onlyObj.SetActive(false);
+        }
+        GetPooledObject(true, itemSpawnPos);
 
         for (int i = 0; i < tilePooledObjects.Length; i++)
         {
