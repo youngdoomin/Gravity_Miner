@@ -3,10 +3,10 @@
 public class PGravity : MonoBehaviour
 {
     //public static bool bJumped;
-    public static float power = 10f; //움직이는 속도
+    public static float power = 20f; //움직이는 속도
     public static bool screenFilter = false;
-    public const float fenergy = 20;  // energy 변수 초기값 저장하는 변수(중력 최댓값)
-    private float reduEner = 10f;  //중력 사용시 1초마다 줄어드는 정도
+    public const float fenergy = 10;  // energy 변수 초기값 저장하는 변수(중력 최댓값)
+    private float reduEner = 15f;  //중력 사용시 1초마다 줄어드는 정도
     //private GameObject trObj;
     void Start()
     {
