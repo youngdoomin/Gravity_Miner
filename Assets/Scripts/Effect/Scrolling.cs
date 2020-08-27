@@ -17,7 +17,7 @@ public class Scrolling : MonoBehaviour
         
         if (SubGravity.sp != 0)     //offset값 갱신
         {
-            offset.Set(0, offset.y + (SubGravity.sp / speed) * Time.deltaTime);   //offset 값 적용, 플레이어 속도만큼 y축으로 빨리 움직임
+            offset.Set(0, offset.y - (SubGravity.sp / speed) * Time.deltaTime);   //offset 값 적용, 플레이어 속도만큼 y축으로 빨리 움직임
             Background_mat.mainTextureOffset = offset;
         }
     }
