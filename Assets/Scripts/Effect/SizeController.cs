@@ -4,6 +4,7 @@ using UnityEngine;
 public class SizeController : MonoBehaviour
 {
     public float range = 6;
+    public float delay;
     private float i = 0;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class SizeController : MonoBehaviour
         while(i <= range)
         {
             i += 2f;
-            yield return new WaitForSeconds(0.33f);
+            yield return new WaitForSeconds(delay);
         
 
         }
