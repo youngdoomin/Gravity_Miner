@@ -125,7 +125,8 @@ public class Playercontroller : MonoBehaviour
             if (Block_special.shieldOn)
             {
                 Block_special.shieldOn = false;
-                Forced(collision.transform.position, xKnockB * 3);
+                collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                //Forced(collision.transform.position, xKnockB * 3);
             }
             else
             {

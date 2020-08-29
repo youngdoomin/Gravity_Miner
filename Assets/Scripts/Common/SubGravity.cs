@@ -11,7 +11,7 @@ public class SubGravity : MonoBehaviour
 
     void Update()
     {
-        if (sp >= speedLock)
+        if (sp > speedLock)
         {
             sp = speedLock;
             if (dontLoop == false)
@@ -22,9 +22,6 @@ public class SubGravity : MonoBehaviour
         }
         else
         { dontLoop = false; }
-    
-        if (sp > Gravity.enerInc)
-            Playercontroller.energy += Time.deltaTime;
     }
     private void FixedUpdate()
     {
@@ -35,17 +32,20 @@ public class SubGravity : MonoBehaviour
             Playercontroller.killLoop = false;
             reaction = false;
 
-            if (sp < speedLock)
+            if(sp < PGravity.power)
+                sp += Time.fixedDeltaTime * PGravity.power / divide;
+
+            else if (sp < speedLock)
                 sp += Time.fixedDeltaTime * sp / divide;
 
-            if ((Input.GetKey(KeyCode.W) && sp > 0 && sp < speedLock && Playercontroller.energy >= 0) || (sp < PGravity.power))
+
+            if (Input.GetKey(KeyCode.W) && Playercontroller.energy >= 0 )// && sp > 0 && sp < speedLock ) || (sp < PGravity.power))
             {
-                sp += Time.fixedDeltaTime * PGravity.power / divide;
                 ParticleEfManager.gravityVal = PGravity.power;
             }
             else if (Input.GetKey(KeyCode.S) && Playercontroller.energy >= 0)// && sp > 0)
             {
-                sp += Time.fixedDeltaTime * PGravity.power / divide;
+                //sp += Time.fixedDeltaTime * PGravity.power / divide;
                 ParticleEfManager.gravityVal = -PGravity.power;
             }
 
