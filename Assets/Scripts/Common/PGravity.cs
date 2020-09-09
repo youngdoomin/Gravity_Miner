@@ -22,7 +22,7 @@ public class PGravity : MonoBehaviour
 
     void Update()
     {
-        if (Playercontroller.energy > 0) // 에너지가 다 닳지 않으면
+        if (Playercontroller.energy > 0 && Playercontroller.life > 0) // 에너지가 다 닳지 않으면
         {
             if (Input.GetKey(KeyCode.W) && SubGravity.sp > 0 || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) //wasd중 아무키나 누르면
             {

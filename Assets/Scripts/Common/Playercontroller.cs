@@ -76,7 +76,6 @@ public class Playercontroller : MonoBehaviour
         if (PGravity.bJumped == true)
         {
             sR.sprite = Jump;
-
         }
         if (untouchable == false && (SubGravity.sp == 0 || PGravity.bJumped == true))
         {
@@ -106,7 +105,6 @@ public class Playercontroller : MonoBehaviour
         /*
         if (ColliderDetect.platformDetect == false && untouchable == false)//ColliderDetect.fallWaited == true && ColliderDetect.platformDetect == false && untouchable == false)
         {
-
             sR.sprite = Fall;
             //SubGravity.sp = Gravity.l;
         }
@@ -124,8 +122,9 @@ public class Playercontroller : MonoBehaviour
         {
             if (Block_special.shieldOn)
             {
-                Block_special.shieldOn = false;
                 collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                StartCoroutine(BlinkEf(collision.gameObject));
+                Block_special.shieldOn = false;
                 //Forced(collision.transform.position, xKnockB * 3);
             }
             else
@@ -218,6 +217,21 @@ public class Playercontroller : MonoBehaviour
 
         }
     }
+
+    IEnumerator BlinkEf(GameObject obj)
+    {
+        var waitTime = 0.2f;
+        var total = 0.0f;
+        var objSpr = obj.GetComponent<SpriteRenderer>();
+        while (total < 3)
+        {
+            if (objSpr.enabled) { objSpr.enabled = false; }
+            else { objSpr.enabled = true; }
+            yield return new WaitForSeconds(waitTime);
+            total += waitTime;
+        }
+    }
+
     IEnumerator Death()
     {
         Time.timeScale = 0.2f;
@@ -236,9 +250,7 @@ IEnumerator Stand()
         {
             i++;
             sR.sprite = Normal[i % 2];
-
             yield return new WaitForSeconds(0.3f);
-
             while ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && ColliderDetect.platformDetect == true && untouchable == false)
             {
                 j++;
@@ -247,9 +259,6 @@ IEnumerator Stand()
             }
         }
     standSwitch = true;
-
-
-
 }
 */
 
@@ -257,26 +266,17 @@ IEnumerator Stand()
     void Die()
     {
         isDie = true;
-
         rigidbody.velocity = Vector2.zero;
-
         BoxCollider2D[] colls = gameObject.GetComponents<BoxCollider2D>();
         colls[0].enabled = false;
         colls[1].enabled = false;
-
         Vector2 dieVelocity = new Vector2(0, 10f);
         rigidbody.AddForce(dieVelocity, ForceMode2D.Impulse);
-
         Invoke("RestartStage", 2f);
-
-
     }
-
-
     public static void Restartstage()
     {
         Time.timeScale = 0f;
-
         //SceneManager.LoadScene Scene(stageLevel, LoadSceneMode.Single);
     }
     */

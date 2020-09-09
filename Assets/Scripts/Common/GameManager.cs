@@ -141,20 +141,25 @@ public class GameManager : MonoBehaviour
     {
         int randomIndex = 0;
 
+        while(true)
+        {
+            if (Score.scoreCt > 2 * tilediff)
+            {
+                randomIndex = Random.Range(tilePooledObjects.Length - tilePooledObjects.Length / 3, tilePooledObjects.Length - 1);
+            }
+            else if (2 * tilediff > Score.scoreCt && Score.scoreCt > tilediff)
+            {
+                randomIndex = Random.Range(tilePooledObjects.Length / 3, tilePooledObjects.Length / 3 * 2 - 1);
+            }
+            else if (Score.scoreCt < tilediff)
+            {
+                randomIndex = Random.Range(0, tilePooledObjects.Length / 3 - 1);
+            }
+            Debug.Log("Index" + randomIndex);
 
-        if (Score.scoreCt > 2 * tilediff)
-        {
-            randomIndex = Random.Range(tilePooledObjects.Length - tilePooledObjects.Length / 3, tilePooledObjects.Length - 1);
+            if (!tileSpawnPos.transform.GetChild(randomIndex).gameObject.activeInHierarchy) { break; }
         }
-        else if (2 * tilediff > Score.scoreCt && Score.scoreCt > tilediff)
-        {
-            randomIndex = Random.Range(tilePooledObjects.Length / 3, tilePooledObjects.Length / 3 * 2 - 1);
-        }
-        else if (Score.scoreCt < tilediff)
-        {
-            randomIndex = Random.Range(0, tilePooledObjects.Length / 3 - 1);
-        }
-        Debug.Log("Index" + randomIndex);
+        
 
         Transform go = tileSpawnPos.transform.GetChild(randomIndex);
 
