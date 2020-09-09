@@ -183,11 +183,11 @@ public class GameManager : MonoBehaviour
 
         if (isRandom)
         {
-            int randomIndex = Random.Range(0, tr.transform.childCount - 1);
+            int randomIndex = Random.Range(0, tr.transform.childCount);
             int tryCt = 0;
             while (tr.GetChild(randomIndex).gameObject.activeInHierarchy == true)
             {
-                randomIndex = Random.Range(0, tr.transform.childCount - 1);
+                randomIndex = Random.Range(0, tr.transform.childCount);
 
                 tryCt++;
                 if (tryCt > 50)
