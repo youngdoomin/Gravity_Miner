@@ -7,25 +7,16 @@ public class ParticleEfManager : MonoBehaviour
     private ParticleSystemRenderer psr;
     public static float gravityVal;
     ParticleSystem.ForceOverLifetimeModule forceMod;
-    private void Awake()
-    {
-    }
 
-    private void OnEnable()
-    {
-        //particle.Play();
-    }
     void Start()
     {
-        //particle.Stop();
         psr = GetComponent<ParticleSystemRenderer>();
-       // gravityVal = -SubGravity.sp;
     }
-    
+
     void Update()
     {
         forceMod = particle.forceOverLifetime;
-        
+
         /*
         var main = particle.main;
         
@@ -57,33 +48,25 @@ public class ParticleEfManager : MonoBehaviour
         */
         particle.gravityModifier = gravityVal;
         if (Input.GetKey(KeyCode.S) && Playercontroller.energy >= 0 || SubGravity.sp == SubGravity.speedLock)
-        {
-            gravityVal = -PGravity.power * 7;
-        }
+        { gravityVal = -PGravity.power * 7; }
         else if (Input.GetKey(KeyCode.W) && Playercontroller.energy >= 0)
-        {
-            gravityVal = PGravity.power * 3;
-        }
+        { gravityVal = PGravity.power * 3; }
         else if (Input.GetKey(KeyCode.A) && Playercontroller.energy >= 0)
-        {
-            forceMod.x = -180;
-        }
+        { forceMod.x = -180; }
         else if (Input.GetKey(KeyCode.D) && Playercontroller.energy >= 0)
-        {
-            forceMod.x = 180;
-        }
+        { forceMod.x = 180; }
         else
         {
             gravityVal = 2;
             forceMod.x = 0;
         }
     }
-    
+
     IEnumerator ParticlePlay()
     {
         particle.Play();
         //particle.startLifetime = 0;
         yield return null;
     }
-    
+
 }

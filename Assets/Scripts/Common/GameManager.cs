@@ -22,12 +22,6 @@ public class GameManager : MonoBehaviour
     public GameObject enemy;
     public int spawnCt;
 
-    //private List<GameObject> oldTileObj = new List<GameObject>();
-    //private List<GameObject> oldObj = new List<GameObject>();
-    //Queue<GameObject> oldTileObj = new Queue<GameObject>();
-    //Queue<GameObject> oldItemObj = new Queue<GameObject>();
-    //Queue<GameObject> oldEnemyObj = new Queue<GameObject>();
-    //Queue<GameObject> oldJamObj = new Queue<GameObject>();
     public Transform tileSpawnPos;
     public Transform enemySpawnPos;
     public Transform itemSpawnPos;
@@ -50,7 +44,6 @@ public class GameManager : MonoBehaviour
         PlayerFinder = GameObject.Find("Player");
 
         Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, enemyDelay);
-
 
         for (int i = 0; i < spawnCt; i++) // 인스펙터에 있는 적 생성
         {
@@ -94,15 +87,14 @@ public class GameManager : MonoBehaviour
             list = new List<int> { 0, 1, 2, 3, 4 }; // 초기화
             //GetJamPooledObject();
         }
-
     }
 
 
     void Pickup(int jamID)
     {
-
-        foreach (int num in list) // 리스트에 있는 모든 수
+        for (int num = 0; num < list.Count; num++)
         {
+
             if (num == jamID) // 값과 인덱스가 일치하면
             {
                 list.Remove(num); // 리스트에서 삭제
@@ -124,13 +116,10 @@ public class GameManager : MonoBehaviour
         int c = Random.Range(0, list.Count); // 리스트 중에 랜덤으로 고름
 
         if (c == bf && list.Count != 1) // 전에 나왔고, 젬이 한 개 이상일 경우
-        {
-            goto RESTART; // 다시 랜덤돌림
-        }
+        { goto RESTART; }// 다시 랜덤돌림
         else
         {
             bf = c; // 다음에 나올 젬과 중복 감지하게 함
-
             GetPooledObject(true, tr);
         }
         return null;
@@ -141,7 +130,7 @@ public class GameManager : MonoBehaviour
     {
         int randomIndex = 0;
 
-        while(true)
+        while (true)
         {
             if (Score.scoreCt > 2 * tilediff)
             {
@@ -159,23 +148,11 @@ public class GameManager : MonoBehaviour
 
             if (!tileSpawnPos.transform.GetChild(randomIndex).gameObject.activeInHierarchy) { break; }
         }
-        
 
         Transform go = tileSpawnPos.transform.GetChild(randomIndex);
 
-        /*
-        for (int i = 0; i < go.transform.childCount; i++)
-        {
-            go.GetChild(i).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-            go.GetChild(i).GetComponent<BoxCollider2D>().enabled = true;
-        
-
-        }
-        */
-
         go.gameObject.transform.position = new Vector3(transform.position.x, PlayerFinder.transform.position.y - 30, transform.position.z);
         go.gameObject.SetActive(true);
-        //oldTileObj.Enqueue(go.gameObject);
 
         return null;
     }
@@ -199,18 +176,13 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("too many attempts");
                     for (int i = 0; i < tr.childCount; i++)
-                    {
-                        tr.GetChild(i).gameObject.SetActive(false);
-                    }
+                    { tr.GetChild(i).gameObject.SetActive(false); }
                 }
             }
-
             poolCt = randomIndex;
         }
         else if (poolCt > tr.transform.childCount)
-        {
-            poolCt = 0;
-        }
+        { poolCt = 0; }
 
         bool spawnPoss = false;
         int safetyNet = 0;
@@ -222,16 +194,13 @@ public class GameManager : MonoBehaviour
             spawnPoss = PreventSpawnOverlap(spawnPosition);
 
             if (spawnPoss)
-            {
-                break;
-            }
+            { break; }
 
             safetyNet++;
             if (safetyNet > 50)
             {
                 Debug.Log("too many attempts");
                 break;
-
             }
         }
         Transform go = tr.GetChild(poolCt);
@@ -241,19 +210,7 @@ public class GameManager : MonoBehaviour
         go.gameObject.SetActive(true);
         Debug.Log(go.gameObject);
         if (tr.gameObject.tag == "Enemy")
-        {
-            //oldEnemyObj.Enqueue(go.gameObject);
-            poolCt++;
-
-        }
-        else if (tr.gameObject.tag == "Platform_jam" || tr.tag == "jam")
-        {
-            //oldJamObj.Enqueue(go.gameObject);
-        }
-        else
-        {
-            //oldItemObj.Enqueue(go.gameObject);
-        }
+        { poolCt++; }
 
         return null;
     }
@@ -261,46 +218,24 @@ public class GameManager : MonoBehaviour
     public void ObjDestroy(string str)
     {
         if (str == "enemy")
-        {
-            //oldEnemyObj.Peek().SetActive(false);
-            //StartCoroutine(wait(enemyDelay));
-            GetPooledObject(false, enemySpawnPos.transform);
-        }
+        { GetPooledObject(false, enemySpawnPos.transform); }
         else if (str == "jam")
         {
-            //var peekObj = oldJamObj.Peek();
-            //peekObj.transform.GetChild(peekObj.transform.childCount - 2).gameObject.SetActive(false);
-            //peekObj.SetActive(false);
-            //oldJamObj.Peek().SetActive(false);
-            //oldJamObj.Dequeue();
             StartCoroutine(wait(itemDelay));
             GetJamPooledObject(jamSpawnPos.transform);
         }
 
         else if (str == "item")
         {
-            //var peekObj = oldItemObj.Peek();
-            //peekObj.transform.GetChild(peekObj.transform.childCount - 2).gameObject.SetActive(false);
-            //peekObj.SetActive(false);
-            //oldItemObj.Peek().SetActive(false);
-            //oldItemObj.Dequeue();
             StartCoroutine(wait(itemDelay));
             GetPooledObject(true, itemSpawnPos.transform);
         }
-        //GetPooledObject();
     }
     public void TileDestroy()
-    {
-        //oldTileObj.Peek().SetActive(false);
-        //oldTileObj.Dequeue();
-        Invoke("GetRandomPooledObject", tileDelay);
-        //GetRandomPooledObject();
-    }
+    { Invoke("GetRandomPooledObject", tileDelay); }
 
     IEnumerator wait(float sec)
-    {
-        yield return new WaitForSeconds(sec);
-    }
+    { yield return new WaitForSeconds(sec); }
 
     bool PreventSpawnOverlap(Vector3 spawnPos)
     {
@@ -320,14 +255,9 @@ public class GameManager : MonoBehaviour
             if (spawnPos.x >= leftExtent && spawnPos.x <= rightExtent)
             {
                 if (spawnPos.y >= lowerExtent && spawnPos.y <= upperExtent)
-                {
-                    return false;
-                }
+                { return false; }
             }
-
         }
         return true;
-
     }
-
 }

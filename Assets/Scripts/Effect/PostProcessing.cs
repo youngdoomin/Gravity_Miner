@@ -19,13 +19,9 @@ public class PostProcessing : MonoBehaviour
     void LateUpdate()
     {
         if (PGravity.screenFilter == true && volume.weight < 1)
-        {
-            volume.weight += 0.1f;
-        }
+        { volume.weight += 0.1f; }
         else if (PGravity.screenFilter == false && volume.weight > 0)
-        {
-            volume.weight -= 0.1f;
-        }
+        { volume.weight -= 0.1f; }
         //bloom.intensity.value = 10 * Time.time % 2;
     }
 }

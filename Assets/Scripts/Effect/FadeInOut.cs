@@ -13,6 +13,5 @@ public class FadeInOut : MonoBehaviour
             animator.SetBool("FadeOutT", true);
             once = true;
         }
-
     }
 }

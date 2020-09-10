@@ -17,10 +17,9 @@ public class StartManager : MonoBehaviour
     public Score score;
 
     public float BgSpeed = 5;
-    
+
     private void Awake()
     {
-
         scrolling.enabled = false;
         tilemapspawner.enabled = false;
         hPManager.enabled = false;
@@ -28,31 +27,23 @@ public class StartManager : MonoBehaviour
         combo.enabled = false;
         score.enabled = false;
         flagNumber = 0;
-        
-        foreach(var ui in UI)
-        {
-            ui.SetActive(false);
-        }
-        
+
+        foreach (var ui in UI)
+        { ui.SetActive(false); }
     }
 
     // Update is called once per frame
     void Update()
     {
         if (flagNumber < 5)
-        {
-            StartFlag();
-        }
+        { StartFlag(); }
     }
 
     void StartFlag()
     {
-
         switch (flagNumber)
         {
-
             case 0: 	//시작 트리거
-
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     Destroy(text.gameObject);
@@ -64,35 +55,24 @@ public class StartManager : MonoBehaviour
 
             case 1: // 발판 파괴
                 foreach (var platform in startPlatform)
-                {
-                    Destroy(platform.gameObject);
-                }
-
+                { Destroy(platform.gameObject); }
                 flagNumber++;
-
                 break;
 
             case 2: //배경 변경
-            if(startBg.transform.position.y < Camera.main.transform.position.y + 50) 
-            {
-                    startBg.transform.position += Vector3.up * Time.deltaTime * BgSpeed; 
-            }
+                if (startBg.transform.position.y < Camera.main.transform.position.y + 50)
+                { startBg.transform.position += Vector3.up * Time.deltaTime * BgSpeed; }
                 else
-                {
-                    flagNumber++;
-                }
+                { flagNumber++; }
                 break;
 
             case 3: // 오브젝트 활성화
                 foreach (var ui in UI)
-                {
-                    ui.SetActive(true);
-                }
+                { ui.SetActive(true); }
                 flagNumber++;
                 break;
 
             case 4: //스크립트 활성화
-
                 tilemapspawner.enabled = true;
                 hPManager.enabled = true;
                 enemySpawner.enabled = true;
@@ -102,7 +82,6 @@ public class StartManager : MonoBehaviour
 
                 flagNumber++;
                 break;
-                
         }
     }
 }

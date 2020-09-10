@@ -5,10 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SlowmotionManager : MonoBehaviour
 {
-
-    public static bool isSlowTime;    //슬로우모션 변수
-    public static float slowmotionScale = 0.2f; //슬로우모션 배율
-    public static bool isPaused = false;
+    public const float slowmotionScale = 0.2f; //슬로우모션 배율
+    public static bool isPaused;
     private string stScene = "Flower_Rain";
     public GameObject[] settingPopup;
 
@@ -17,8 +15,6 @@ public class SlowmotionManager : MonoBehaviour
         if (stScene == SceneManager.GetActiveScene().name)
         { ClosePopup(); }
 
-        isSlowTime = false;    //슬로우모션 변수
-        slowmotionScale = 0.2f; //슬로우모션 배율
         isPaused = false;
     }
     void Update()
@@ -34,21 +30,12 @@ public class SlowmotionManager : MonoBehaviour
                 { SlowMotion(); }
 
             }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    goHome();
-                }
-                else if (Input.GetKeyDown("return"))
-                {
-                    again();
-                }
-            }
-
-
-
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            { goHome(); }
+            else if (Input.GetKeyDown("return"))
+            { again(); }
         }
+
         else
         {
             if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
@@ -102,17 +89,11 @@ public class SlowmotionManager : MonoBehaviour
     }
     void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
     {
-        Debug.Log("slowmotion_Active");
+        //Debug.Log("slowmotion_Active");
         if ((PGravity.screenFilter == true || Score.scoreActive == false)) //&& (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
-        {
-            isSlowTime = true;
-            Time.timeScale = slowmotionScale;
-        }
+        { Time.timeScale = slowmotionScale; }
         else
-        {
-            isSlowTime = false;
-            Time.timeScale = 1;
-        }
+        { Time.timeScale = 1; }
 
         Time.timeScale = Mathf.Clamp(Time.timeScale, slowmotionScale, 1);
         Time.fixedDeltaTime = Time.timeScale * 0.02f; // 이미지 끊기는거 방지

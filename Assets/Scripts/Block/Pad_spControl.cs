@@ -15,16 +15,10 @@ public class Pad_spControl : MonoBehaviour
         if (coll.gameObject.name == "Player" && SubGravity.reaction == false)
         {
             if (Type == PadType.Up)
-            {
-                SubGravity.sp = SubGravity.speedLock;
-            }
+            {SubGravity.sp = SubGravity.speedLock;}
             else if (Type == PadType.Down)
-            {
-                SubGravity.sp = 0;
-            }
-
+            {SubGravity.sp = 0;}
         }
-
     }
 }
 

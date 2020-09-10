@@ -4,7 +4,7 @@ using UnityEngine;
 public class SubGravity : MonoBehaviour
 {
     public const float speedLock = 40.0f; //최대 속력
-    public static float sp = Gravity.l;
+    public static float sp;
     public static bool reaction = false;
     public int divide;
     bool dontLoop;

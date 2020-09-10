@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
             animator.SetTrigger(hashAttack);
             var player = GameObject.FindGameObjectWithTag("Playerbody");
@@ -35,20 +35,18 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        
-    if (Playercontroller.untouchable == true) // 무적시간일 경우
-        Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, true);  //충돌 무시
+        if (Playercontroller.untouchable == true) // 무적시간일 경우
+            Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, true);  //충돌 무시
         else
-        Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, false);  //충돌함
+            Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, false);  //충돌함
     }
 
     IEnumerator EnemyExDel()
     {
-        // this.gameObject.BroadcastMessage("ParticlePlay");
         animator.enabled = false;
         childEf.SetActive(true);
-        
-        for(int i = 0; i < death.Length; i++)
+
+        for (int i = 0; i < death.Length; i++)
         {
             deathEf.sprite = death[i];
             yield return new WaitForSeconds(0.2f);

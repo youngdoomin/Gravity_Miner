@@ -12,7 +12,6 @@ public class Scrolling : MonoBehaviour
 
     void Update()
     {
-        
         Vector2 offset = Background_mat.mainTextureOffset;  //현재 메터리얼의 offset값 획득
         
         if (SubGravity.sp != 0)     //offset값 갱신

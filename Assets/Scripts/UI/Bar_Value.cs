@@ -99,7 +99,7 @@ public class Bar_Value : MonoBehaviour
                 UIBar.CPb.bar.CrossFadeAlpha(0.0f, 0.5f, false);
                 isInvinP = false;
         }
-        else if (UIBar.inviP == false && isInvinP == false)
+        else if (UIBar.inviP == false && isInvinP == false && (UIBar.CPb.barBackground.color.a != 0 && UIBar.CPb.bar.color.a != 0))
         {
             UIBar.CPb.barBackground.CrossFadeAlpha(1.0f, 0.5f, false);
             UIBar.CPb.bar.CrossFadeAlpha(1.0f, 0.5f, false);

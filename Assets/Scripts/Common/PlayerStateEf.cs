@@ -2,14 +2,13 @@
 using UnityEngine;
 
 public class PlayerStateEf : MonoBehaviour
-{       
+{
     public Sprite ShieldEf;
     SpriteRenderer PState;
 
     void Start()
     {
         PState = GetComponent<SpriteRenderer>();
-
     }
 
     void Update()
@@ -20,9 +19,7 @@ public class PlayerStateEf : MonoBehaviour
             StartCoroutine(SparkEffect());
         }
         else
-        {
-            PState.sprite = null;
-        }
+        { PState.sprite = null; }
     }
     IEnumerator SparkEffect()
     {
@@ -30,6 +27,5 @@ public class PlayerStateEf : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         PState.color = new Color(1, 1, 1, trans);
-        
     }
 }

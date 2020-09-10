@@ -2,7 +2,6 @@
 
 public class Block_special : MonoBehaviour
 {
-    public static bool shieldOn;
     enum Item
     {
         Heart,
@@ -11,6 +10,9 @@ public class Block_special : MonoBehaviour
     }
     [SerializeField]
     Item Type;
+
+    public static bool shieldOn;
+
     private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.name == "Player")
@@ -21,13 +23,9 @@ public class Block_special : MonoBehaviour
                 HPManager.Heal(Playercontroller.life);
             }
             else if (Type == Item.Mana)
-            {
-                Playercontroller.energy = PGravity.fenergy;
-            }
+            {Playercontroller.energy = PGravity.fenergy;}
             else if (Type == Item.Shield)
-            {
-                shieldOn = true;
-            }
+            {shieldOn = true;}
             this.gameObject.SetActive(false);
         }
         

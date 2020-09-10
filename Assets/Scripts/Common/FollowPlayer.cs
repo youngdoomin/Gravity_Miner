@@ -12,24 +12,12 @@ public class FollowPlayer : MonoBehaviour
     public float shakeStr = 10.0f; // 흔들리는 정도
     public static bool shake = false;
 
-    /*
-    Vector3 originPos;
-    void Awake()
-    {
-        
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-        Screen.SetResolution(1980, 1080, true);     // 해상도 고정
-        
-    }
-    */
 
     void Start()
     {
         shakeT = shakeTime;
         offset.y = offset.y - offsetY;
     }
-
 
     private void LateUpdate()
     {
@@ -47,11 +35,9 @@ public class FollowPlayer : MonoBehaviour
             }
         }
         else
-        {
-            transform.position = new Vector3(0, position.y, -10); // 원래 자리로
-        }
-
+        { transform.position = new Vector3(0, position.y, -10); }// 원래 자리로
     }
+
     IEnumerator StartOffset()
     {
         for (int i = 0; i < -offset.y; i++)

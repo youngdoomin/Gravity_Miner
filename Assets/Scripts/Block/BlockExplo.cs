@@ -15,15 +15,12 @@ public class BlockExplo : MonoBehaviour
         {
             transform.GetChild(1).gameObject.SetActive(true);
             this.gameObject.BroadcastMessage("SizeCon");
+
             Collider2D[] explo = Physics2D.OverlapCircleAll(gameObject.transform.position, exploRange);
             foreach (var col in explo)
             {
-
                 col.SendMessage("Destruct");
-                //col.SendMessage("BrEf");
                 col.SendMessage("EnemyExDel");
-
-                //Destroy(col.gameObject);
             }
         }
     }
