@@ -9,4 +9,5 @@ public class TriggerController : MonoBehaviour
         else
         { GetComponent<Collider2D>().isTrigger = false; }
     }
+    
 }

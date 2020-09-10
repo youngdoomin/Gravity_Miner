@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     void Pickup(int jamID)
     {
-        for (int num = 0; num < list.Count; num++)
+        foreach (int num in list) // 리스트에 있는 모든 수
         {
 
             if (num == jamID) // 값과 인덱스가 일치하면

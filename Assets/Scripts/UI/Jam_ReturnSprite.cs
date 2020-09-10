@@ -8,29 +8,16 @@ public class Jam_ReturnSprite : MonoBehaviour
     public int jamID;
     public static Sprite cJamUI;
 
-    void Update()
+    private void OnEnable()
     {
-
-        /*
-        if(DestructTile.tileBreak == false)
-        {
-            GetComponent<BoxCollider2D>().enabled = false;
-        }
-        else
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-        }*/
+        this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
-
-
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.name == "Player")
-        {
-            //SE.Play();
-            JamReturn();
-        }
-    
+        { JamReturn(); }
+
     }
 
     void JamReturn()
@@ -46,8 +33,8 @@ public class Jam_ReturnSprite : MonoBehaviour
         }
         cJamUI = UI_img;
         JamUI.spriteToUI(jamCt);
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-        GetComponent<BoxCollider2D>().enabled = false;
+        this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         //Destroy(gameObject);
 
     }

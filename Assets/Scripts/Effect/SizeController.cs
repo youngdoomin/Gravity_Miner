@@ -20,5 +20,6 @@ public class SizeController : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
         gameObject.SetActive(false);
+        i = 0;
     }
 }

@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     Animator animator;
     const int PLAYER = 8;
     const int ENEMY = 9;  //레이어마스크
-
+     
     private readonly int hashAttack = Animator.StringToHash("Attack");
 
     private void Start()
@@ -32,7 +32,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+    private void OnEnable()
+    {
+        mole.color = new Color(1, 1, 1, 1);
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
     void Update()
     {
         if (Playercontroller.untouchable == true) // 무적시간일 경우
@@ -40,6 +44,8 @@ public class Enemy : MonoBehaviour
         else
             Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, false);  //충돌함
     }
+
+    
 
     IEnumerator EnemyExDel()
     {

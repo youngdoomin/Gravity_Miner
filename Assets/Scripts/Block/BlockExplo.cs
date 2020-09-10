@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BlockExplo : MonoBehaviour
+public class BlockExplo : DestructTile
 {
     private float exploRange = 10;
 
@@ -19,9 +19,13 @@ public class BlockExplo : MonoBehaviour
             Collider2D[] explo = Physics2D.OverlapCircleAll(gameObject.transform.position, exploRange);
             foreach (var col in explo)
             {
-                col.SendMessage("Destruct");
                 col.SendMessage("EnemyExDel");
+                col.SendMessage("Destruct");
             }
+        }
+        else if (coll.gameObject.tag == "Player" && tileSp.color.a == 1)
+        {
+            StartCoroutine(Destruct());
         }
     }
 }

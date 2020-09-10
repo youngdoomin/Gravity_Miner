@@ -2,7 +2,8 @@
 using UnityEngine;
 public class DestructTile : MonoBehaviour
 {
-    SpriteRenderer tileSp;
+    [HideInInspector]
+    public SpriteRenderer tileSp;
     public static bool tileBreak = false;
     void Start()
     {
@@ -23,7 +24,7 @@ public class DestructTile : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
     }
 
-    IEnumerator Destruct()
+    public IEnumerator Destruct()
     {
         GetComponent<BoxCollider2D>().enabled = false;
         tileBreak = true;
