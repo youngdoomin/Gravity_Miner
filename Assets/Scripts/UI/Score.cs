@@ -3,11 +3,10 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    
     private Text scoreUI;   // 텍스트
     public Text highScore; // 최고점수
     private Text finScore; // 게임 종료 점수
-    public Text finHighScore;
+    private Text finHighScore;
     [SerializeField]
     private string exhi = "HighScore";
     public static float scoreCt = 0;    // 점수 받는 변수
@@ -32,6 +31,8 @@ public class Score : MonoBehaviour
         scorecap = false;
         scoreActive = true;
 
+        //hiScoreCt = 0;
+        
     }
 
     // Update is called once per frame
@@ -105,6 +106,5 @@ public class Score : MonoBehaviour
     {
         PlayerPrefs.DeleteKey(exhi);
     }
-    
 
 }

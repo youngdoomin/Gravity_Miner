@@ -10,12 +10,29 @@ public class SlowmotionManager : MonoBehaviour
     private string stScene = "Flower_Rain";
     public GameObject[] settingPopup;
 
+    public GameObject[] tutoUi;
+    public GameObject[] button;
+    private int page;
+
     private void Start()
     {
+        isPaused = false;
+
+
         if (stScene == SceneManager.GetActiveScene().name)
         { ClosePopup(); }
 
-        isPaused = false;
+        DeactiveTutorial();
+        AccountInfoManager.account.info.hiScore = 0;
+        if (AccountInfoManager.account.info.hiScore == 0)//!PlayerPrefs.HasKey(exhi))
+        {
+            for (int i = 0; i < button.Length; i++)
+            {
+                button[i].SetActive(true);
+            }
+            Time.timeScale = 0;
+            ActiveTutorial();
+        }
     }
     void Update()
     {
@@ -98,4 +115,31 @@ public class SlowmotionManager : MonoBehaviour
         Time.timeScale = Mathf.Clamp(Time.timeScale, slowmotionScale, 1);
         Time.fixedDeltaTime = Time.timeScale * 0.02f; // 이미지 끊기는거 방지
     }
+
+    public void ActiveTutorial()
+    {
+
+        if (page > 0) { tutoUi[page - 1].SetActive(false); }
+        if (page < tutoUi.Length)
+        {
+            tutoUi[page].SetActive(true);
+            page++;
+        }
+        else { DeactiveTutorial(); }
+    }
+    public void DeactiveTutorial()
+    {
+        for (int i = 0; i < tutoUi.Length; i++)
+        {
+            tutoUi[i].SetActive(false);
+        }
+
+        for (int i = 0; i < button.Length; i++)
+        {
+            button[i].SetActive(false);
+        }
+
+        Time.timeScale = 1;
+    }
+
 }

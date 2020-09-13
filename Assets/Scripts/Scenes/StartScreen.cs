@@ -10,6 +10,7 @@ public class StartScreen : MonoBehaviour
 
     public GameObject platform;
     public GameObject background;
+    public GameObject title;
     public MeshRenderer[] bgRender;
 
     public static int step = 0;
@@ -23,9 +24,6 @@ public class StartScreen : MonoBehaviour
     {
         step = 0;
         pressAnyB = GameObject.Find("Press").GetComponent<Text>();
-        // fadeout = GameObject.Find("FadeOut").GetComponent<Image>();
-
-        background = GameObject.Find("Background");
     }
     void Update()
     {
@@ -34,7 +32,7 @@ public class StartScreen : MonoBehaviour
         else
         { pressAnyB.CrossFadeAlpha(0.0f, 0.5f, false); }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && Time.time != 0)
         { startflag = true; }
 
         if (startflag == true)
@@ -56,6 +54,7 @@ public class StartScreen : MonoBehaviour
 
                 case _JUMP:
                     background.transform.Translate(Vector2.up * Time.deltaTime * 30 * (startDuration - 0.4f));
+                    title.transform.Translate(Vector2.up * Time.deltaTime * 720 * (startDuration - 0.4f));
                     if (startDuration > 0.8f)
                     { step++; }
                     break;
@@ -70,6 +69,7 @@ public class StartScreen : MonoBehaviour
 
                 case _BGUP: // 배경 올라옴
                     background.transform.Translate(Vector2.up * Time.deltaTime * 30 * (startDuration - 0.4f));
+                    title.transform.Translate(Vector2.up * Time.deltaTime * 720 * (startDuration - 0.4f));
                     if (background.transform.position.y > 0)
                     {
                         background.transform.position = new Vector3(background.transform.position.x, 0, background.transform.position.z);
