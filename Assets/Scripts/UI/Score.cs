@@ -56,7 +56,7 @@ public class Score : MonoBehaviour
         { scoreActive = true; }
         else
         {
-            if(SlowmotionManager.isPaused == true)
+            if(SlowmotionManager.isPaused == true && Time.timeScale == 0)
             {
                 scoreActive = false;
                 finScore = GameObject.Find("FinalScore").GetComponent<Text>();

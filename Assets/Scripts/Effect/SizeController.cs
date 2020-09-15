@@ -14,7 +14,7 @@ public class SizeController : MonoBehaviour
 
     IEnumerator SizeCon()
     {
-        while(i <= range)
+        while(i < range)
         {
             i += 2f;
             yield return new WaitForSeconds(delay);

@@ -11,7 +11,7 @@ public class BlockExplo : DestructTile
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Player" && SubGravity.sp == SubGravity.speedLock)
+        if (coll.gameObject.tag == "Player" && SubGravity.sp  == SubGravity.speedLock)
         {
             transform.GetChild(1).gameObject.SetActive(true);
             this.gameObject.BroadcastMessage("SizeCon");

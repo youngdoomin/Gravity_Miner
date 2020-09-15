@@ -17,21 +17,26 @@ public class SlowmotionManager : MonoBehaviour
     private void Start()
     {
         isPaused = false;
-
-
-        if (stScene == SceneManager.GetActiveScene().name)
-        { ClosePopup(); }
-
         DeactiveTutorial();
-        AccountInfoManager.account.info.hiScore = 0;
-        if (AccountInfoManager.account.info.hiScore == 0)// && stScene == SceneManager.GetActiveScene().name)//!PlayerPrefs.HasKey(exhi))
-        {
 
+        AccountInfoManager.account.info.hiScore = 0;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        ClosePopup();
+        if(AccountInfoManager.account.info.hiScore == 0)
+        {
             ActiveTutorial();
+            isPaused = true;
         }
     }
+
+
     void Update()
     {
+        //if (tutoUi[0].activeInHierarchy) { Time.timeScale = 0; }
+
         if (stScene == SceneManager.GetActiveScene().name)
         {
             if (Playercontroller.life > 0)
@@ -87,6 +92,7 @@ public class SlowmotionManager : MonoBehaviour
     public void PlayTime()
     {
         ClosePopup();
+        DeactiveTutorial();
         isPaused = false;
         Time.timeScale = 1;
     }
@@ -117,11 +123,12 @@ public class SlowmotionManager : MonoBehaviour
 
     public void ActiveTutorial()
     {
+        Time.timeScale = 0;
+        
         for (int i = 0; i < button.Length; i++)
         {
             button[i].SetActive(true);
         }
-        Time.timeScale = 0;
 
         ClosePopup();
         ChangePage(0);
@@ -139,6 +146,7 @@ public class SlowmotionManager : MonoBehaviour
         }
 
         page = 0;
+        isPaused = false;
         Time.timeScale = 1;
     }
 
