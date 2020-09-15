@@ -24,13 +24,9 @@ public class SlowmotionManager : MonoBehaviour
 
         DeactiveTutorial();
         AccountInfoManager.account.info.hiScore = 0;
-        if (AccountInfoManager.account.info.hiScore == 0)//!PlayerPrefs.HasKey(exhi))
+        if (AccountInfoManager.account.info.hiScore == 0)// && stScene == SceneManager.GetActiveScene().name)//!PlayerPrefs.HasKey(exhi))
         {
-            for (int i = 0; i < button.Length; i++)
-            {
-                button[i].SetActive(true);
-            }
-            Time.timeScale = 0;
+
             ActiveTutorial();
         }
     }
@@ -58,6 +54,9 @@ public class SlowmotionManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
             { TimeSwitch(0); }
             else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) { ChangePage(-1); }
+            else if(Input.GetKeyDown(KeyCode.RightArrow)) { ChangePage(1); };
         }
     }
 
@@ -118,14 +117,14 @@ public class SlowmotionManager : MonoBehaviour
 
     public void ActiveTutorial()
     {
-
-        if (page > 0) { tutoUi[page - 1].SetActive(false); }
-        if (page < tutoUi.Length)
+        for (int i = 0; i < button.Length; i++)
         {
-            tutoUi[page].SetActive(true);
-            page++;
+            button[i].SetActive(true);
         }
-        else { DeactiveTutorial(); }
+        Time.timeScale = 0;
+
+        ClosePopup();
+        ChangePage(0);
     }
     public void DeactiveTutorial()
     {
@@ -139,7 +138,38 @@ public class SlowmotionManager : MonoBehaviour
             button[i].SetActive(false);
         }
 
+        page = 0;
         Time.timeScale = 1;
+    }
+
+    public void ChangePage(int i)
+    {
+        for (int idx = 0; idx < tutoUi.Length; idx++)
+        {
+            tutoUi[idx].SetActive(false);
+        }
+        if (page < tutoUi.Length)
+        {
+            page += i;
+            tutoUi[page].SetActive(true);
+
+            if (page == tutoUi.Length - 1)
+            {
+                button[1].SetActive(false);
+            }
+            else if (page == 0)
+            {
+                button[0].SetActive(false);
+            }
+            else
+            {
+                button[0].SetActive(true);
+                button[1].SetActive(true);
+            }
+
+
+        }
+        else { DeactiveTutorial(); }
     }
 
 }

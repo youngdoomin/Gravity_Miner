@@ -73,7 +73,7 @@ public class Playercontroller : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" && !untouchable && !kill)
+        if (collision.gameObject.tag == "Enemy" && !untouchable && !kill && collision.gameObject.GetComponent<SpriteRenderer>().color.a != 0)
         {
             if (Block_special.shieldOn)
             {
