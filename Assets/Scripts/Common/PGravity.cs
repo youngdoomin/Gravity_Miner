@@ -2,7 +2,7 @@
 
 public class PGravity : MonoBehaviour
 {
-    public const float power = 10f; //움직이는 속도
+    public const float power = 20f; //움직이는 속도
     public const float fenergy = 10;  // energy 변수 초기값 저장하는 변수(중력 최댓값)
     public float reduEner = 15f;  //중력 사용시 1초마다 줄어드는 정도
 

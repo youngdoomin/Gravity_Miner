@@ -4,6 +4,7 @@ using UnityEngine;
 public class SubGravity : MonoBehaviour
 {
     public int divide;
+    public int knock = 5;
     bool dontLoop;
 
     void Update()
@@ -51,7 +52,7 @@ public class SubGravity : MonoBehaviour
         else if ((GameManager.Instance.kill || GameManager.Instance.tileBreak) && GameManager.Instance.sp != GameManager.Instance.speedLock) //적 처치, 블록 파괴 상태
         {
             transform.Translate(Vector2.down * Time.fixedDeltaTime * GameManager.Instance.sp * 10); //반대로 올라감
-            GameManager.Instance.sp += 5f * Time.fixedDeltaTime;
+            GameManager.Instance.sp += knock * Time.fixedDeltaTime;
             StartCoroutine(WaitReact());
         }
         else { 
