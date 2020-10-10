@@ -48,11 +48,15 @@ public class SubGravity : MonoBehaviour
 
 
         }
-        else if (GameManager.Instance.kill || GameManager.Instance.tileBreak) //적 처치, 블록 파괴 상태
+        else if ((GameManager.Instance.kill || GameManager.Instance.tileBreak) && GameManager.Instance.sp != GameManager.Instance.speedLock) //적 처치, 블록 파괴 상태
         {
             transform.Translate(Vector2.down * Time.fixedDeltaTime * GameManager.Instance.sp * 10); //반대로 올라감
             GameManager.Instance.sp += 5f * Time.fixedDeltaTime;
             StartCoroutine(WaitReact());
+        }
+        else { 
+            GameManager.Instance.kill = false;
+            GameManager.Instance.tileBreak = false;
         }
 
 

@@ -8,7 +8,7 @@ public class PGravity : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.screenFilter = false;
+
     }
     void UseSkill()
     {
@@ -19,7 +19,7 @@ public class PGravity : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.energy > 0 && GameManager.Instance.life > 0 &&
-            Input.GetKey(KeyCode.W) && GameManager.Instance.sp > 0 || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) // 에너지가 다 닳지 않으면
+            GameManager.Instance.sp > 0 && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))) // 에너지가 다 닳지 않으면
         {
             AudioMixerManager.Instance.Setlowpass(AudioMixerManager.Instance.lowpassOn);
             UseSkill(); // 에너지 감소 함수 호출

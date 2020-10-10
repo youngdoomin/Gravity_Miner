@@ -12,7 +12,7 @@ public class Pad_spControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.name == "Player" && GameManager.Instance.reaction == false)
+        if (coll.gameObject.name == "Player")
         {
             if (Type == PadType.Up)
             {GameManager.Instance.sp = GameManager.Instance.speedLock;}
