@@ -20,8 +20,8 @@ public class DestroyByBoundary_Script : MonoBehaviour
         
         if (other.gameObject.tag == "TileMap")
         {
-            other.gameObject.SetActive(false);
             GameManager.Instance.TileDestroy();
+            //other.gameObject.SetActive(false);
         }  
         else if(other.gameObject.tag == "SpawnBox_Enemy")
         {

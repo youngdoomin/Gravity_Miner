@@ -17,7 +17,7 @@ public class SlowmotionManager : MonoBehaviour
     {
         DeactiveTutorial();
 
-        AccountInfoManager.account.info.hiScore = 0;
+        //AccountInfoManager.account.info.hiScore = 0;
     }
 
     private void OnLevelWasLoaded(int level)

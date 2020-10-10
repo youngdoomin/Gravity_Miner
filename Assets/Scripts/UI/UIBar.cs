@@ -5,8 +5,7 @@ public class UIBar : MonoBehaviour
 {
     public static bool inviP;
     public static bool inviC;
-    public static float waitP = 0;
-    public static float waitC = 0;
+    public float waitP = 0;
     private int j = 1;
     private int i = 1;
     public Bar_Value Pb; // 중력바
@@ -21,7 +20,6 @@ public class UIBar : MonoBehaviour
     private int d = 1;
     public Bar_Value Cb; // 콤보바
     public static Bar_Value CCb;
-    private float alphaObj = 0;
 
     private void Start()
     {
@@ -104,17 +102,11 @@ public class UIBar : MonoBehaviour
             inviP = false;
 
         }
-        
+
         if (Combo.comboEnd == true)
-        {
-            inviC = true;
-            waitC += 0.1f;
-        }
+        { inviC = true; }
         else
-        {
-            inviC = false;
-            waitC = 0;
-        }
-        
+        { inviC = false; }
+
     }
 }

@@ -12,7 +12,7 @@ public class BlockExplo : DestructTile
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Player")// && GameManager.Instance.sp  == GameManager.Instance.speedLock)
+        if (coll.gameObject.tag == "Player" && (GameManager.Instance.sp  == GameManager.Instance.speedLock || UIBar.CSb.bar.color == Color.red))
         {
             sphere.SetActive(true);
             sphere.GetComponent<Animator>().SetTrigger("Boom");

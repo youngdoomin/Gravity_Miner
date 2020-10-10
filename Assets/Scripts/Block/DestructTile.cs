@@ -4,7 +4,16 @@ public class DestructTile : MonoBehaviour
 {
     [HideInInspector]
     public SpriteRenderer tileSp;
+    private Vector3 spawnPos;
 
+
+    void Awake()
+    {
+        spawnPos = transform.localPosition;
+    }
+
+
+    
     void Start()
     {
         tileSp = GetComponent<SpriteRenderer>();
@@ -22,8 +31,9 @@ public class DestructTile : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         GetComponent<BoxCollider2D>().enabled = true;
+        
+        transform.localPosition = spawnPos;
     }
-
     public IEnumerator Destruct()
     {
         GetComponent<BoxCollider2D>().enabled = false;
