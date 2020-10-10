@@ -9,9 +9,7 @@ public class Score : MonoBehaviour
     private Text finHighScore;
     [SerializeField]
     private string exhi = "HighScore";
-    public static float scoreCt = 0;    // 점수 받는 변수
-    public static bool scorecap = false;
-    public static bool scoreActive = true;
+
 
     [SerializeField]
     private int hiScoreCt = 0;
@@ -27,10 +25,6 @@ public class Score : MonoBehaviour
         //highScore.text = hiScoreCt.ToString("00000");
         scoreUI = GameObject.Find("ScoreVal").GetComponent<Text>();    // 스코어라는 text탐색
 
-        scoreCt = 0;    // 점수 받는 변수
-        scorecap = false;
-        scoreActive = true;
-
         //hiScoreCt = 0;
         
     }
@@ -38,11 +32,11 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((int)scoreCt > hiScoreCt)
+        if ((int)GameManager.Instance.scoreCt > hiScoreCt)
         {
-            hiScoreCt = (int)scoreCt;
-            AccountInfoManager.account.info.NewHiScore((int)scoreCt);
-            PlayerPrefs.SetInt(exhi, (int)scoreCt);
+            hiScoreCt = (int)GameManager.Instance.scoreCt;
+            AccountInfoManager.account.info.NewHiScore((int)GameManager.Instance.scoreCt);
+            PlayerPrefs.SetInt(exhi, (int)GameManager.Instance.scoreCt);
             //highScore.text = scoreUI.text;
         }
         if (int.Parse(highScore.text) > int.Parse(digit))
@@ -52,13 +46,13 @@ public class Score : MonoBehaviour
         }
 
 
-        if (Playercontroller.life > 0) //체력이 0 이하면 점수가 오르지 않음
-        { scoreActive = true; }
+        if (GameManager.Instance.life > 0) //체력이 0 이하면 점수가 오르지 않음
+        { GameManager.Instance.scoreActive = true; }
         else
         {
-            if(SlowmotionManager.isPaused == true && Time.timeScale == 0)
+            if(GameManager.Instance.isPaused == true && Time.timeScale == 0)
             {
-                scoreActive = false;
+                GameManager.Instance.scoreActive = false;
                 finScore = GameObject.Find("FinalScore").GetComponent<Text>();
                 finScore.text = scoreUI.text;
 
@@ -68,23 +62,23 @@ public class Score : MonoBehaviour
             }
         }
 
-        if (scorecap == false && scoreActive == true)
+        if (GameManager.Instance.scorecap == false && GameManager.Instance.scoreActive == true)
         {
-            if (SubGravity.sp < SubGravity.speedLock)
-            { scoreCt += SubGravity.sp * Time.deltaTime; }  // 시간 당 속도를 계속 더함
+            if (GameManager.Instance.sp < GameManager.Instance.speedLock)
+            { GameManager.Instance.scoreCt += GameManager.Instance.sp * Time.deltaTime; }  // 시간 당 속도를 계속 더함
             else
-            { scoreCt += SubGravity.sp * Time.deltaTime * 2; }  // 시간 당 속도를 계속 더함
+            { GameManager.Instance.scoreCt += GameManager.Instance.sp * Time.deltaTime * 2; }  // 시간 당 속도를 계속 더함
             printScore();   // 점수 출력
         }
-        if (Jam_ReturnSprite.getJam == true)
+        if (GameManager.Instance.getJam == true)
         {
-            scoreCt += 100;
-            Jam_ReturnSprite.getJam = false;
+            GameManager.Instance.scoreCt += 100;
+            GameManager.Instance.getJam = false;
         }
-        if (JamUI.collect == true)
+        if (GameManager.Instance.collect == true)
         {
-            scoreCt += 1000;
-            JamUI.collect = false;
+            GameManager.Instance.scoreCt += 1000;
+            GameManager.Instance.collect = false;
         }
 
 
@@ -96,7 +90,7 @@ public class Score : MonoBehaviour
 
     void printScore()
     {
-        int intScore = (int)scoreCt;    // 정수형 변수로 바꿔서 받음(소수점 제거)
+        int intScore = (int)GameManager.Instance.scoreCt;    // 정수형 변수로 바꿔서 받음(소수점 제거)
         string scoreStr = intScore.ToString();  // 정수를 문자열로
         scoreUI.text = scoreStr;    // 텍스트에다 그 문자열을 넣음
     }

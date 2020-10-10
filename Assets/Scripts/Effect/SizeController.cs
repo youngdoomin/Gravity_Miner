@@ -12,6 +12,7 @@ public class SizeController : MonoBehaviour
         this.gameObject.transform.localScale = new Vector3(i, i, i);
     }
 
+
     IEnumerator SizeCon()
     {
         while(i < range)

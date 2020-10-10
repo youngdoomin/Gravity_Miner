@@ -13,7 +13,7 @@ public class PlayerStateEf : MonoBehaviour
 
     void Update()
     {
-        if (Block_special.shieldOn == true)
+        if (GameManager.Instance.shieldOn == true)
         {
             PState.sprite = ShieldEf;
             StartCoroutine(SparkEffect());

@@ -10,7 +10,7 @@ public class FollowPlayer : MonoBehaviour
     public float shakeTime = 10.0f; // 흔들리는 시간
     private float shakeT; // 시간 초기값 받음
     public float shakeStr = 10.0f; // 흔들리는 정도
-    public static bool shake = false;
+
 
 
     void Start()
@@ -24,13 +24,13 @@ public class FollowPlayer : MonoBehaviour
         Vector3 position = transform.position;
         position.y = player.position.y + offsetY;
 
-        if (shake == true && SlowmotionManager.isPaused == false)
+        if (GameManager.Instance.shake == true && GameManager.Instance.isPaused == false)
         {
             transform.position = new Vector3(Random.Range(-shakeStr, shakeStr), position.y + Random.Range(-shakeStr, shakeStr), -10); // 그 범위 안에서 랜덤하게 흔들림
             shakeTime -= Time.deltaTime; // 시간 감소
             if (shakeTime <= 0)
             {
-                shake = false;
+                GameManager.Instance.shake = false;
                 shakeTime = shakeT; // 시간 초기화
             }
         }

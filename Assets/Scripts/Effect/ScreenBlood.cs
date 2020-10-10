@@ -15,9 +15,9 @@ public class ScreenBlood : MonoBehaviour
     {
         bloody.material.color = new Color(1, 1, 1, Random.Range(transparency - 0.4f, transparency));
 
-        if (Playercontroller.untouchable == true && transparency < 0.7)
+        if (GameManager.Instance.untouchable == true && transparency < 0.7)
         { transparency += 0.1f; }
-        else if (Playercontroller.untouchable == false && transparency > 0)
+        else if (GameManager.Instance.untouchable == false && transparency > 0)
         { transparency -= 0.1f; }
 
     }

@@ -4,7 +4,7 @@ public class DestructTile : MonoBehaviour
 {
     [HideInInspector]
     public SpriteRenderer tileSp;
-    public static bool tileBreak = false;
+
     void Start()
     {
         tileSp = GetComponent<SpriteRenderer>();
@@ -27,7 +27,7 @@ public class DestructTile : MonoBehaviour
     public IEnumerator Destruct()
     {
         GetComponent<BoxCollider2D>().enabled = false;
-        tileBreak = true;
+        GameManager.Instance.tileBreak = true;
         Debug.Log("파괴");
         if (this.gameObject.tag == "Platform_jam")
         { this.gameObject.SendMessage("SpawnJam"); }

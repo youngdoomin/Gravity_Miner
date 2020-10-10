@@ -8,12 +8,13 @@ public class StartScreen : MonoBehaviour
     private bool startflag;
     //public Image fadeout;
 
+    private Animator animator;
     public GameObject platform;
     public GameObject background;
     public GameObject title;
     public MeshRenderer[] bgRender;
 
-    public static int step = 0;
+    private int step = 0;
     public const int _JUMP = 1;
     public const int _DESPLAT = 2;
     public const int _BGUP = 3;
@@ -22,6 +23,7 @@ public class StartScreen : MonoBehaviour
     public float startDuration;
     void Start()
     {
+        animator = GameObject.Find("Player").GetComponent<Animator>();
         step = 0;
         pressAnyB = GameObject.Find("Press").GetComponent<Text>();
     }
@@ -55,6 +57,7 @@ public class StartScreen : MonoBehaviour
                 case _JUMP:
                     background.transform.Translate(Vector2.up * Time.deltaTime * 30 * (startDuration - 0.4f));
                     title.transform.Translate(Vector2.up * Time.deltaTime * 720 * (startDuration - 0.4f));
+                    animator.SetTrigger("Drill");
                     if (startDuration > 0.8f)
                     { step++; }
                     break;

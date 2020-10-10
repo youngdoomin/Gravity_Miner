@@ -3,24 +3,23 @@
 public class PGravity : MonoBehaviour
 {
     public const float power = 10f; //움직이는 속도
-    public static bool screenFilter;
     public const float fenergy = 10;  // energy 변수 초기값 저장하는 변수(중력 최댓값)
-    private float reduEner = 15f;  //중력 사용시 1초마다 줄어드는 정도
+    public float reduEner = 15f;  //중력 사용시 1초마다 줄어드는 정도
 
     void Start()
     {
-        screenFilter = false;
+        GameManager.Instance.screenFilter = false;
     }
     void UseSkill()
     {
-        Playercontroller.energy -= reduEner * Time.deltaTime;   // 중력 사용시 에너지 감소
-        screenFilter = true;
+        GameManager.Instance.energy -= reduEner * Time.deltaTime;   // 중력 사용시 에너지 감소
+        GameManager.Instance.screenFilter = true;
     }
 
     void Update()
     {
-        if (Playercontroller.energy > 0 && Playercontroller.life > 0 &&
-            Input.GetKey(KeyCode.W) && SubGravity.sp > 0 || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) // 에너지가 다 닳지 않으면
+        if (GameManager.Instance.energy > 0 && GameManager.Instance.life > 0 &&
+            Input.GetKey(KeyCode.W) && GameManager.Instance.sp > 0 || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) // 에너지가 다 닳지 않으면
         {
             AudioMixerManager.Instance.Setlowpass(AudioMixerManager.Instance.lowpassOn);
             UseSkill(); // 에너지 감소 함수 호출
@@ -32,11 +31,11 @@ public class PGravity : MonoBehaviour
             { transform.Translate(Vector2.up * Time.deltaTime * power); }
             else if (Input.GetKey(KeyCode.S))
             {
-                Score.scorecap = true;
+                GameManager.Instance.scorecap = true;
                 transform.Translate(Vector2.down * Time.deltaTime * power);
 
                 if (!Input.GetKeyDown(KeyCode.S)) // S버튼을 뗐을시
-                {Score.scorecap = false;}
+                { GameManager.Instance.scorecap = false;}
             }
             else
             { OutPower(); }
@@ -46,7 +45,7 @@ public class PGravity : MonoBehaviour
     }
     void OutPower()
     {
-        screenFilter = false;
+        GameManager.Instance.screenFilter = false;
         AudioMixerManager.Instance.Setlowpass(AudioMixerManager.Instance.lowpassOff);
     }
 }

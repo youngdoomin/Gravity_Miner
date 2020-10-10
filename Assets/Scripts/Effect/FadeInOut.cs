@@ -7,7 +7,7 @@ public class FadeInOut : MonoBehaviour
     
     void Update()
     {
-        if(Playercontroller.life == 0 && once == false)
+        if(GameManager.Instance.life == 0 && once == false)
         {
             animator.enabled = true;
             animator.SetBool("FadeOutT", true);

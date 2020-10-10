@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class Combo : MonoBehaviour
 {
     public static float i = 0;
-    public static Text comboUI;
-    public static int timer = 20;
+    Text comboUI;
+    public const int timer = 20;
     public static int comboCt = 0;
-    public static bool comboEnd = false;
+    bool comboEnd = false;
 
     public float speed = 1.0f;
     // Start is called before the first frame update
@@ -30,7 +30,6 @@ public class Combo : MonoBehaviour
             printCombo();
             if (i >= timer)
             {
-
                 cbCC();
             }
             else if (i < timer)
@@ -47,6 +46,12 @@ public class Combo : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (comboEnd == true)
+            GameObject.Find("ComboBar").SendMessage("BarOff");
+    }
+
     void printCombo()
     {
         comboEnd = false;
@@ -55,12 +60,12 @@ public class Combo : MonoBehaviour
         comboUI.text = "X" + comboStr;  // 콤보 출력
     }
 
-    public static void cbCC()
+    public void cbCC()
     {
         comboCt = 0;    // 콤보 초기화
         nprintCombo();
     }
-    public static void nprintCombo()
+    public void nprintCombo()
     {
         comboEnd = true;
         //comboUI.text = "";  // 콤보 텍스트 없앰

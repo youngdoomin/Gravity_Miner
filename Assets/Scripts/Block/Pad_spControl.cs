@@ -12,12 +12,12 @@ public class Pad_spControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.name == "Player" && SubGravity.reaction == false)
+        if (coll.gameObject.name == "Player" && GameManager.Instance.reaction == false)
         {
             if (Type == PadType.Up)
-            {SubGravity.sp = SubGravity.speedLock;}
+            {GameManager.Instance.sp = GameManager.Instance.speedLock;}
             else if (Type == PadType.Down)
-            {SubGravity.sp = 0;}
+            { GameManager.Instance.sp = 0;}
         }
     }
 }

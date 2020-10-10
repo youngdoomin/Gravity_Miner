@@ -24,7 +24,7 @@ public class Jam_random : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (list.Count == 0 && JamUI.collect == false) // 젬을 다 모았을 경우
+        if (list.Count == 0 && GameManager.Instance.collect == false) // 젬을 다 모았을 경우
         {
             UIfinder.SendMessage("Collect");
             list = new List<int> { 0, 1, 2, 3, 4 }; // 초기화
@@ -42,12 +42,12 @@ public class Jam_random : MonoBehaviour
             if (num == jamID) // 값과 인덱스가 일치하면
             {
                 list.Remove(num); // 리스트에서 삭제
-                JamUI.repeat = false;
+                GameManager.Instance.repeat = false;
                 Debug.Log("중복 아님");
             }
             else
             {
-                JamUI.repeat = true;
+                GameManager.Instance.repeat = true;
                 Debug.Log("중복");
             }
         }

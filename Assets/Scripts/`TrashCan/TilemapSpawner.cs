@@ -38,17 +38,17 @@ public class TilemapSpawner : MonoBehaviour
 
         TilemapSpawner tile = new TilemapSpawner();
         
-        if (Score.scoreCt > 2 * tilediff)
+        if (GameManager.Instance.scoreCt > 2 * tilediff)
         {
             //게임옵젝생성(오브젝트, 위치, 회전)  identity 기본값
             gridChild = Instantiate(objects[UnityEngine.Random.Range(objects.Length - objects.Length / 3 , objects.Length - 1)], spawnPos, Quaternion.identity); 
         }
-        else if(2 * tilediff > Score.scoreCt && Score.scoreCt > tilediff)
+        else if(2 * tilediff > GameManager.Instance.scoreCt && GameManager.Instance.scoreCt > tilediff)
         {
             //게임옵젝생성(오브젝트, 위치, 회전)  identity 기본값
             gridChild = Instantiate(objects[UnityEngine.Random.Range(objects.Length / 3, objects.Length / 3 * 2 - 1)], spawnPos, Quaternion.identity); 
         }
-        else if(Score.scoreCt < tilediff)
+        else if(GameManager.Instance.scoreCt < tilediff)
         {
             //게임옵젝생성(오브젝트, 위치, 회전) identity 기본값
             gridChild = Instantiate(objects[UnityEngine.Random.Range(0, objects.Length / 3 - 1)], spawnPos, Quaternion.identity); 

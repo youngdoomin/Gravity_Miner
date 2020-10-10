@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     const int PLAYER = 8;
     const int ENEMY = 9;  //레이어마스크
      
-    private readonly int hashAttack = Animator.StringToHash("Attack");
 
     private void Start()
     {
@@ -26,20 +25,14 @@ public class Enemy : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            animator.SetTrigger(hashAttack);
             var player = GameObject.FindGameObjectWithTag("Playerbody");
             player.SendMessage("EnemyKill", this.gameObject);
         }
     }
 
-    private void OnEnable()
-    {
-        mole.color = new Color(1, 1, 1, 1);
-        GetComponent<BoxCollider2D>().enabled = true;
-    }
     void Update()
     {
-        if (Playercontroller.untouchable == true) // 무적시간일 경우
+        if (GameManager.Instance.untouchable == true) // 무적시간일 경우
             Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, true);  //충돌 무시
         else
             Physics2D.IgnoreLayerCollision(PLAYER, ENEMY, false);  //충돌함

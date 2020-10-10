@@ -4,18 +4,13 @@ using UnityEngine.UI;
 public class JamUI : MonoBehaviour
 {
     public Image[] jamArray;
-    public static Image[] cJamArray;
-    public static float waitTime = 0;
-    public static int uiJamCt;
     public Sprite defaultSprite;
-    public static bool delay = false;
-    public static bool collect = false;
-    public static bool collectTxt = false;
-    public static bool repeat;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        cJamArray = jamArray;
+        GameManager.Instance.cJamArray = jamArray;
     }
 
     // Update is called once per frame
@@ -26,14 +21,14 @@ public class JamUI : MonoBehaviour
 
     public static void spriteToUI(int amount)
     {
-        if (repeat == false)
+        if (GameManager.Instance.repeat == false)
         {
-            cJamArray[amount - 1].sprite = Jam_ReturnSprite.cJamUI;
+            GameManager.Instance.cJamArray[amount - 1].sprite = GameManager.Instance.cJamUI;
 
         }
-        if (amount >= cJamArray.Length)
+        if (amount >= GameManager.Instance.cJamArray.Length)
         {
-            Jam_ReturnSprite.jamCt = 0;
+            GameManager.Instance.jamCt = 0;
         }
     }
 
@@ -41,14 +36,14 @@ public class JamUI : MonoBehaviour
 
     IEnumerator Collect()
     {
-        for (int i = 0; i < cJamArray.Length; i++)
-        { cJamArray[i].sprite = defaultSprite; }
-        delay = false;
+        for (int i = 0; i < GameManager.Instance.cJamArray.Length; i++)
+        { GameManager.Instance.cJamArray[i].sprite = defaultSprite; }
+        GameManager.Instance.delay = false;
         yield return null;
 
-        delay = true;
-        collect = true;
-        collectTxt = true;
+        GameManager.Instance.delay = true;
+        GameManager.Instance.collect = true;
+        GameManager.Instance.collectTxt = true;
         yield return null;
     }
 }

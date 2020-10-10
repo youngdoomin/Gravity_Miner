@@ -1,10 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [HideInInspector]
+    public bool shake, shieldOn, screenFilter, untouchable, GroundDam, kill, killLoop, comboActive,
+        reaction, delay, collect, collectTxt, repeat, scorecap, scoreActive, isPaused, tileBreak, 
+        getJam;
+    [HideInInspector]
+    public float energy = PGravity.fenergy, gravityVal, sp, waitTime, scoreCt;
+
+    public int life, uiJamCt, jamCt;
+    public float speedLock = 40.0f;
+    public Image[] cJamArray;
+    public Sprite cJamUI;
 
     Collider2D[] blocks;
     public GameObject[] jamBlocks;
@@ -40,48 +54,57 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        UIfinder = GameObject.Find("JamManager");
-        PlayerFinder = GameObject.Find("Player");
-
-        Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, enemyDelay);
-
-        for (int i = 0; i < spawnCt; i++) // 인스펙터에 있는 적 생성
+        if(SceneManager.GetActiveScene().name == "Flower_Rain")
         {
-            onlyObj = Instantiate(enemy, transform.position, Quaternion.identity);
-            onlyObj.transform.parent = enemySpawnPos.transform;
-            onlyObj.SetActive(false);
+            tileSpawnPos = GameObject.Find("Block").transform;
+            enemySpawnPos = GameObject.Find("Enemy").transform;
+            itemSpawnPos = GameObject.Find("Item").transform;
+            jamSpawnPos = GameObject.Find("Jam").transform;
+            UIfinder = GameObject.Find("JamManager");
+            PlayerFinder = GameObject.Find("Player");
+
+            Debug.LogFormat("타일 딜레이 : {0}, 딜레이 {1}", tileDelay, enemyDelay);
+
+            for (int i = 0; i < spawnCt; i++) // 인스펙터에 있는 적 생성
+            {
+                onlyObj = Instantiate(enemy, transform.position, Quaternion.identity);
+                onlyObj.transform.parent = enemySpawnPos.transform;
+                onlyObj.SetActive(false);
+            }
+            GetPooledObject(false, enemySpawnPos.transform);
+
+            for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
+            {
+                onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
+                onlyObj.transform.parent = jamSpawnPos.transform;
+                onlyObj.SetActive(false);
+            }
+            GetJamPooledObject(jamSpawnPos.transform);
+
+            for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
+            {
+                onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
+                onlyObj.transform.parent = itemSpawnPos.transform;
+                onlyObj.SetActive(false);
+            }
+            GetPooledObject(true, itemSpawnPos);
+
+            for (int i = 0; i < tilePooledObjects.Length; i++)
+            {
+                spawnedTile = Instantiate(tilePooledObjects[i], transform.position, Quaternion.identity);
+                spawnedTile.transform.parent = tileSpawnPos.transform;
+                spawnedTile.SetActive(false);
+            } // 인스펙터에 있는 타일 생성
+            GetRandomPooledObject();
+
+
         }
-        GetPooledObject(false, enemySpawnPos.transform);
-
-        for (int i = 0; i < jamBlocks.Length; i++) // 인스펙터에 있는 젬 생성
-        {
-            onlyObj = Instantiate(jamBlocks[i], transform.position, Quaternion.identity);
-            onlyObj.transform.parent = jamSpawnPos.transform;
-            onlyObj.SetActive(false);
-        }
-        GetJamPooledObject(jamSpawnPos.transform);
-
-        for (int i = 0; i < pooledObjects.Length; i++) // 인스펙터에 있는 아이템 생성
-        {
-            onlyObj = Instantiate(pooledObjects[i], transform.position, Quaternion.identity);
-            onlyObj.transform.parent = itemSpawnPos.transform;
-            onlyObj.SetActive(false);
-        }
-        GetPooledObject(true, itemSpawnPos);
-
-        for (int i = 0; i < tilePooledObjects.Length; i++)
-        {
-            spawnedTile = Instantiate(tilePooledObjects[i], transform.position, Quaternion.identity);
-            spawnedTile.transform.parent = tileSpawnPos.transform;
-            spawnedTile.SetActive(false);
-        } // 인스펙터에 있는 타일 생성
-        GetRandomPooledObject();
-
     }
 
     void Update()
     {
-        if (list.Count == 0 && JamUI.collect == false) // 젬을 다 모았을 경우
+
+        if (list.Count == 0 && collect == false) // 젬을 다 모았을 경우
         {
             UIfinder.SendMessage("Collect");
             list = new List<int> { 0, 1, 2, 3, 4 }; // 초기화
@@ -98,12 +121,12 @@ public class GameManager : MonoBehaviour
             if (num == jamID) // 값과 인덱스가 일치하면
             {
                 list.Remove(num); // 리스트에서 삭제
-                JamUI.repeat = false;
+                repeat = false;
                 Debug.Log("중복 아님");
             }
             else
             {
-                JamUI.repeat = true;
+                repeat = true;
                 Debug.Log("중복");
             }
         }
@@ -132,15 +155,15 @@ public class GameManager : MonoBehaviour
 
         while (true)
         {
-            if (Score.scoreCt > 2 * tilediff)
+            if (scoreCt > 2 * tilediff)
             {
                 randomIndex = Random.Range(tilePooledObjects.Length - tilePooledObjects.Length / 3, tilePooledObjects.Length - 1);
             }
-            else if (2 * tilediff > Score.scoreCt && Score.scoreCt > tilediff)
+            else if (2 * tilediff > scoreCt && scoreCt > tilediff)
             {
                 randomIndex = Random.Range(tilePooledObjects.Length / 3, tilePooledObjects.Length / 3 * 2 - 1);
             }
-            else if (Score.scoreCt < tilediff)
+            else if (scoreCt < tilediff)
             {
                 randomIndex = Random.Range(0, tilePooledObjects.Length / 3 - 1);
             }

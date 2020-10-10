@@ -6,11 +6,11 @@ public class ColliderDetect : MonoBehaviour
     {
         if (col.gameObject.tag == "Platform" || col.gameObject.tag == "Platform_jam")
         {
-            if ((SubGravity.sp >= SubGravity.speedLock && Playercontroller.untouchable == false) && col.gameObject.layer != 11
+            if (GameManager.Instance.sp >= GameManager.Instance.speedLock && GameManager.Instance.untouchable == false && col.gameObject.layer != 11
                 && col.gameObject.name != "BombBlock") //낙하 데미지
-            { Playercontroller.GroundDam = true; }
-            else { Playercontroller.GroundDam = false; }
-            SubGravity.sp = 0;
+            { GameManager.Instance.GroundDam = true; }
+            else { GameManager.Instance.GroundDam = false; }
+            GameManager.Instance.sp = 0;
             SoundManager.instance.PlaySE(SoundManager.instance.blockEf);
         }
     }

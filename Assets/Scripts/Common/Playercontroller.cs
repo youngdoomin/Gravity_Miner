@@ -11,12 +11,7 @@ public class Playercontroller : MonoBehaviour
     public Boundary boundary;
     public float movespeed = 7f;    //이동 속도
     public int invinTime;   // 무적 시간
-    public static bool untouchable; // 무적 여부
-    public static bool GroundDam; // 바닥 데미지 여부
-    public static int life; // 플레이어 체력
     public const int maxLife = 4;
-    public static float energy;   // 중력 사용량
-    public static bool kill;
     SpriteRenderer sR;
 
     private float xKnockB = 0.2f;
@@ -30,38 +25,29 @@ public class Playercontroller : MonoBehaviour
     public Sprite Damaged;
     public Sprite Fall;
 
-    public static bool killLoop;
-    public static bool comboActive;
-
     void Start()
     {
         sR = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
-        life = maxLife;
-        energy = PGravity.fenergy;
-        untouchable = false; // 무적 여부
-        GroundDam = false;   // 바닥 데미지 여부
-        kill = false;
-        killLoop = false;
-        comboActive = false;
+        GameManager.Instance.life = maxLife;
     }
 
     void Update()
     {
-        if (GroundDam)
+        if (GameManager.Instance.GroundDam)
         {OnDamaged();}
-        if (kill && !killLoop)
+        if (GameManager.Instance.kill && !GameManager.Instance.killLoop)
         {
             SoundManager.instance.PlaySE(SoundManager.instance.kill);
-            killLoop = true;
+            GameManager.Instance.killLoop = true;
         }
     }
     void FixedUpdate()
     {
         float horizontalMove = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalMove, 0);
-        if (!FollowPlayer.shake)
+        if (!GameManager.Instance.shake)
             rb.velocity = movement * movespeed;
         rb.position = new Vector2
             (
@@ -73,13 +59,13 @@ public class Playercontroller : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" && !untouchable && !kill && collision.gameObject.GetComponent<SpriteRenderer>().color.a != 0)
+        if (collision.gameObject.tag == "Enemy" && !GameManager.Instance.untouchable && !GameManager.Instance.kill && collision.gameObject.GetComponent<SpriteRenderer>().color.a != 0)
         {
-            if (Block_special.shieldOn)
+            if (GameManager.Instance.shieldOn)
             {
                 collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 StartCoroutine(BlinkEf(collision.gameObject));
-                Block_special.shieldOn = false;
+                GameManager.Instance.shieldOn = false;
             }
             else
             {
@@ -95,17 +81,17 @@ public class Playercontroller : MonoBehaviour
 
     public void OnDamaged()
     {
-        life--;
+        GameManager.Instance.life--;
         this.gameObject.BroadcastMessage("ParticlePlay");
-        SubGravity.sp = 0;
-        UIBar.inviC = true;
-        Combo.cbCC();
-        FollowPlayer.shake = true;
-        HPManager.TakeDamage(life);
+        GameManager.Instance.sp = 0;
+        GameObject.Find("ComboBar").SendMessage("BarOff");
+        GameObject.Find("ScoreUI").SendMessage("cbCC");
+        GameManager.Instance.shake = true;
+        HPManager.TakeDamage(GameManager.Instance.life);
         sR.sprite = Damaged;
-        GroundDam = false;
+        GameManager.Instance.GroundDam = false;
         SoundManager.instance.PlaySE(SoundManager.instance.damage);
-        if (life == 0)
+        if (GameManager.Instance.life == 0)
         { StartCoroutine(Death()); }
         StartCoroutine(Wait());
     }
@@ -117,7 +103,7 @@ public class Playercontroller : MonoBehaviour
 
     IEnumerator Wait()
     {
-        untouchable = true;
+        GameManager.Instance.untouchable = true;
         int count = 0;
         while (count < invinTime)
         {
@@ -130,22 +116,22 @@ public class Playercontroller : MonoBehaviour
         }
         sR.color = new Color(1, 1, 1, 1);
         sR.sprite = Fall; // 기본 스프라이트
-        untouchable = false; // 무적시간 종료
+        GameManager.Instance.untouchable = false; // 무적시간 종료
     }
 
     IEnumerator EnemyKill(GameObject enemy)
     {
-        if (SubGravity.sp == SubGravity.speedLock)
+        if (GameManager.Instance.sp == GameManager.Instance.speedLock)
         {
-            SubGravity.sp = 0; // 내려가지 않게 함
-            kill = true;
+            GameManager.Instance.sp = 0; // 내려가지 않게 함
+            GameManager.Instance.kill = true;
             Combo.comboCt++; // 콤보 증가
             Combo.i = 0;
-            FollowPlayer.shake = true; // 화면 흔들림 켬
+            GameManager.Instance.shake = true; // 화면 흔들림 켬
             EnemySpawner.EnemyCt--;
-            energy = PGravity.fenergy; // 중력량 증가
-            Score.scoreCt += Combo.comboCt % 3 == 0 ? 200 : 100; // 기본 점수 100증가 3콤보 배수마다 200 증가
-            comboActive = true;
+            GameManager.Instance.energy = PGravity.fenergy; // 중력량 증가
+            GameManager.Instance.scoreCt += Combo.comboCt % 3 == 0 ? 200 : 100; // 기본 점수 100증가 3콤보 배수마다 200 증가
+            GameManager.Instance.comboActive = true;
             enemy.SendMessage("EnemyExDel");
             yield return null;
         }

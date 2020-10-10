@@ -18,9 +18,9 @@ public class PostProcessing : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (PGravity.screenFilter == true && volume.weight < 1)
+        if (GameManager.Instance.screenFilter == true && volume.weight < 1)
         { volume.weight += 0.1f; }
-        else if (PGravity.screenFilter == false && volume.weight > 0)
+        else if (GameManager.Instance.screenFilter == false && volume.weight > 0)
         { volume.weight -= 0.1f; }
         //bloom.intensity.value = 10 * Time.time % 2;
     }

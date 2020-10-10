@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SlowmotionManager : MonoBehaviour
 {
     public const float slowmotionScale = 0.2f; //슬로우모션 배율
-    public static bool isPaused;
     private string stScene = "Flower_Rain";
     public GameObject[] settingPopup;
 
@@ -16,7 +15,6 @@ public class SlowmotionManager : MonoBehaviour
 
     private void Start()
     {
-        isPaused = false;
         DeactiveTutorial();
 
         AccountInfoManager.account.info.hiScore = 0;
@@ -28,7 +26,7 @@ public class SlowmotionManager : MonoBehaviour
         if(AccountInfoManager.account.info.hiScore == 0)
         {
             ActiveTutorial();
-            isPaused = true;
+            GameManager.Instance.isPaused = true;
         }
     }
 
@@ -39,12 +37,12 @@ public class SlowmotionManager : MonoBehaviour
 
         if (stScene == SceneManager.GetActiveScene().name)
         {
-            if (Playercontroller.life > 0)
+            if (GameManager.Instance.life > 0)
             {
                 if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
                 { TimeSwitch(0); }
                 else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
-                if (isPaused != true)
+                if (GameManager.Instance.isPaused != true)
                 { SlowMotion(); }
 
             }
@@ -67,8 +65,8 @@ public class SlowmotionManager : MonoBehaviour
 
     void TimeSwitch(int i)
     {
-        isPaused = !isPaused;   // 일시정지 온오프
-        if (isPaused == true)    //일시정지가 밎다면
+        GameManager.Instance.isPaused = !GameManager.Instance.isPaused;   // 일시정지 온오프
+        if (GameManager.Instance.isPaused == true)    //일시정지가 밎다면
         { OpenPopup(i); } // 시간 멈춤
         else                    //아니면
         { PlayTime(); } // 시간 흐름
@@ -93,14 +91,14 @@ public class SlowmotionManager : MonoBehaviour
     {
         ClosePopup();
         DeactiveTutorial();
-        isPaused = false;
+        GameManager.Instance.isPaused = false;
         Time.timeScale = 1;
     }
 
     public void OpenPopup(int i)
     {
         settingPopup[i].SetActive(true);
-        isPaused = true;
+        GameManager.Instance.isPaused = true;
         Time.timeScale = 0;
     }
 
@@ -112,7 +110,7 @@ public class SlowmotionManager : MonoBehaviour
     void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
     {
         //Debug.Log("slowmotion_Active");
-        if ((PGravity.screenFilter == true || Score.scoreActive == false)) //&& (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
+        if (GameManager.Instance.screenFilter == true || GameManager.Instance.scoreActive == false) //&& (stScene == SceneManager.GetActiveScene().name)) // 슬로우모션 조건 : 에너지가 남아있다 && 파워 버튼을 눌렀다
         { Time.timeScale = slowmotionScale; }
         else
         { Time.timeScale = 1; }
@@ -146,7 +144,7 @@ public class SlowmotionManager : MonoBehaviour
         }
 
         page = 0;
-        isPaused = false;
+        GameManager.Instance.isPaused = false;
         Time.timeScale = 1;
     }
 
