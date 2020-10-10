@@ -25,69 +25,43 @@ public class UIBar : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.energy = PGravity.fenergy; // 중력량 증가
+
         CSb = Sb;
         CPb = Pb;
         CCb = Cb;
         Pb.BarValue = 50;
-        while (Playercontroller.energy * i <= 100.0f) // 100이 넘을 때까지 곱함
+        while (GameManager.Instance.energy * i <= 100.0f) // 100이 넘을 때까지 곱함
         {
             i++;
         }
-        j = (int)Playercontroller.energy * i - 100; // 거기서 초과함 값을 뺌
+        j = (int)GameManager.Instance.energy * i - 100; // 거기서 초과함 값을 뺌
 
-        while (SubGravity.speedLock * a <= 100.0f)
+        while (GameManager.Instance.speedLock * a <= 100.0f)
         {
             a++;
         }
-        b = (int)SubGravity.speedLock * a - 100;
+        b = (int)GameManager.Instance.speedLock * a - 100;
 
         while (Combo.timer * c <= 100.0f)
         {
             c++;
         }
         d = (int)Combo.timer * c - 100;
-        StartCoroutine(wait());
-    }
-    public void setAlpha(float alpha)
-    {
-        Image[] children = GetComponentsInChildren<Image>();
-        Text[] textChild = GetComponentsInChildren<Text>();
-        SpriteRenderer[] spriteChild = GetComponentsInChildren<SpriteRenderer>();
-
-        Color newColor;
-        foreach (Image child in children)
-        {
-            newColor = child.color;
-            newColor.a = alpha;
-            child.color = newColor;
-        }
-
-        foreach (SpriteRenderer sChild in spriteChild)
-        {
-            newColor = sChild.color;
-            newColor.a = alpha;
-            sChild.color = newColor;
-        }
-        foreach (Text tChild in textChild)
-        {
-            newColor = tChild.color;
-            newColor.a = alpha;
-            tChild.color = newColor;
-        }
     }
 
     private void Update()
     {
 
-        StartCoroutine(WaitInvisible(Playercontroller.energy));
+        StartCoroutine(WaitInvisible(GameManager.Instance.energy));
     }
     void FixedUpdate()
     {
         int speedUI;
-        int energyUI = (int)Playercontroller.energy;
-        if (Playercontroller.kill == false || DestructTile.tileBreak == false)
+        int energyUI = (int)GameManager.Instance.energy;
+        if (GameManager.Instance.kill == false || GameManager.Instance.tileBreak == false)
         {
-            speedUI = (int)SubGravity.sp;
+            speedUI = (int)GameManager.Instance.sp;
 
         }
         else
@@ -96,7 +70,7 @@ public class UIBar : MonoBehaviour
         }
 
         Pb.BarValue = energyUI * i - (j / 2); // 중력바 정도 변경
-        if (Playercontroller.kill == false && DestructTile.tileBreak == false)
+        if (GameManager.Instance.kill == false && GameManager.Instance.tileBreak == false)
         {
             Sb.BarValue = speedUI * a - (b / 2);
         }
@@ -112,7 +86,7 @@ public class UIBar : MonoBehaviour
     IEnumerator WaitInvisible(float barVal)
     {
         yield return new WaitForSeconds(1);
-        if (barVal == Playercontroller.energy && inviP == false)
+        if (barVal == GameManager.Instance.energy && inviP == false)
         {
 
             waitP += 0.1f;
@@ -123,13 +97,14 @@ public class UIBar : MonoBehaviour
                 //waitP = 1;
             }
         }
-        else if (barVal != Playercontroller.energy)
+        else if (barVal != GameManager.Instance.energy)
         {
 
             waitP = 0;
             inviP = false;
 
         }
+        
         if (Combo.comboEnd == true)
         {
             inviC = true;
@@ -140,15 +115,6 @@ public class UIBar : MonoBehaviour
             inviC = false;
             waitC = 0;
         }
+        
     }
-
-    IEnumerator wait()
-    {
-        alphaObj += 0.1f;
-        setAlpha(alphaObj);
-        yield return new WaitForSeconds(0.1f);
-        if (alphaObj < 1)
-            StartCoroutine(wait());
-    }
-
 }

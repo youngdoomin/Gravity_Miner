@@ -84,8 +84,7 @@ public class Playercontroller : MonoBehaviour
         GameManager.Instance.life--;
         this.gameObject.BroadcastMessage("ParticlePlay");
         GameManager.Instance.sp = 0;
-        GameObject.Find("ComboBar").SendMessage("BarOff");
-        GameObject.Find("ScoreUI").SendMessage("cbCC");
+        Combo.comboCt = 0;
         GameManager.Instance.shake = true;
         HPManager.TakeDamage(GameManager.Instance.life);
         sR.sprite = Damaged;

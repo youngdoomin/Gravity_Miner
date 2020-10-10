@@ -7,7 +7,7 @@ public class Combo : MonoBehaviour
     Text comboUI;
     public const int timer = 20;
     public static int comboCt = 0;
-    bool comboEnd = false;
+    public static bool comboEnd = false;
 
     public float speed = 1.0f;
     // Start is called before the first frame update
@@ -30,7 +30,8 @@ public class Combo : MonoBehaviour
             printCombo();
             if (i >= timer)
             {
-                cbCC();
+                comboCt = 0;
+                nprintCombo();
             }
             else if (i < timer)
             {
@@ -48,8 +49,12 @@ public class Combo : MonoBehaviour
 
     private void FixedUpdate()
     {
+        /*
         if (comboEnd == true)
-            GameObject.Find("ComboBar").SendMessage("BarOff");
+        {
+            UIBar.inviC = true;
+        }
+        */
     }
 
     void printCombo()
@@ -60,11 +65,6 @@ public class Combo : MonoBehaviour
         comboUI.text = "X" + comboStr;  // 콤보 출력
     }
 
-    public void cbCC()
-    {
-        comboCt = 0;    // 콤보 초기화
-        nprintCombo();
-    }
     public void nprintCombo()
     {
         comboEnd = true;

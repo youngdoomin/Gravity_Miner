@@ -73,7 +73,7 @@ public class Bar_Value : MonoBehaviour
         //txtTitle.text = Title + " " + val + "%";
         bar.color = BarColor;
         barBackground.color = BarBackGroundColor;
-        if (SubGravity.sp == SubGravity.speedLock)
+        if (GameManager.Instance.sp == GameManager.Instance.speedLock)
         {
             UIBar.CSb.bar.color = UIBar.CSb.BarAlertColor;
         }
@@ -84,20 +84,20 @@ public class Bar_Value : MonoBehaviour
     {
         if (UIBar.inviC == true && isInvinC == false)
         {
-                UIBar.CCb.bar.CrossFadeAlpha(0.0f, 0.5f, false);
+            UIBar.CCb.bar.CrossFadeAlpha(0.0f, 0.5f, false);
             isInvinC = true;
         }
-        else if (Playercontroller.comboActive == true && isInvinC == true)
+        else if (GameManager.Instance.comboActive == true && isInvinC == true)
         {
             UIBar.CCb.bar.CrossFadeAlpha(1.0f, 0.5f, false);
-            Playercontroller.comboActive = false;
+            GameManager.Instance.comboActive = false;
             isInvinC = false;
         }
         if (UIBar.inviP == true)
         {
-                UIBar.CPb.barBackground.CrossFadeAlpha(0.0f, 0.5f, false);
-                UIBar.CPb.bar.CrossFadeAlpha(0.0f, 0.5f, false);
-                isInvinP = false;
+            UIBar.CPb.barBackground.CrossFadeAlpha(0.0f, 0.5f, false);
+            UIBar.CPb.bar.CrossFadeAlpha(0.0f, 0.5f, false);
+            isInvinP = false;
         }
         else if (UIBar.inviP == false && isInvinP == false && (UIBar.CPb.barBackground.color.a != 0 && UIBar.CPb.bar.color.a != 0))
         {
