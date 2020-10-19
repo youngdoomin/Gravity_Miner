@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public bool shake, shieldOn, screenFilter, untouchable, GroundDam, kill, killLoop, comboActive,
-        reaction, delay, collect, collectTxt, repeat, scorecap, scoreActive, isPaused, tileBreak, 
+        reaction, delay, collect, collectTxt, repeat, scorecap, scoreActive, isPaused, tileBreak,
         getJam;
     [HideInInspector]
     public float energy = PGravity.fenergy, gravityVal, sp, waitTime, scoreCt;
@@ -48,13 +48,24 @@ public class GameManager : MonoBehaviour
 
     float xAxis;
     int poolCt;
+
+    Text full;
+    Text Windowed;
+    Color black = Color.black;
+    Color gray = Color.gray;
+    Resolution resolution;
+
     private void Awake()
     {
         Instance = this;
+
+        resolution = Screen.currentResolution;
     }
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Flower_Rain")
+        //Screen.SetResolution(Screen.width, Screen.height, true);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+        if (SceneManager.GetActiveScene().name == "Flower_Rain")
         {
             tileSpawnPos = GameObject.Find("Block").transform;
             enemySpawnPos = GameObject.Find("Enemy").transform;
@@ -112,6 +123,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void WindowedScreen(bool isActive)
+    {
+        full = GameObject.Find("FullScreen").GetComponent<Text>();
+        Windowed = GameObject.Find("Windowed").GetComponent<Text>();
+        if (isActive)
+        {
+            Screen.SetResolution(Screen.currentResolution.width / 2, Screen.currentResolution.height / 2, false);
+            Windowed.color = black;
+            full.color = gray;
+        }
+        else
+        {
+            Screen.SetResolution(resolution.width, resolution.height, true);
+            Windowed.color = gray;
+            full.color = black;
+        }
+    }
 
     void Pickup(int jamID)
     {

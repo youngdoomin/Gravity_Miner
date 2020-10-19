@@ -12,7 +12,7 @@ public class SlowmotionManager : MonoBehaviour
     public GameObject[] tutoUi;
     public GameObject[] button;
     private int page;
-
+    bool isTuto;
     private void Start()
     {
         DeactiveTutorial();
@@ -33,7 +33,12 @@ public class SlowmotionManager : MonoBehaviour
 
     void Update()
     {
-        //if (tutoUi[0].activeInHierarchy) { Time.timeScale = 0; }
+        if (isTuto)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) { ChangePage(-1); }
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) { ChangePage(1); };
+
+        }
 
         if (stScene == SceneManager.GetActiveScene().name)
         {
@@ -58,8 +63,6 @@ public class SlowmotionManager : MonoBehaviour
             { TimeSwitch(0); }
             else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) { ChangePage(-1); }
-            else if(Input.GetKeyDown(KeyCode.RightArrow)) { ChangePage(1); };
         }
     }
 
@@ -122,7 +125,8 @@ public class SlowmotionManager : MonoBehaviour
     public void ActiveTutorial()
     {
         Time.timeScale = 0;
-        
+        isTuto = true;
+
         for (int i = 0; i < button.Length; i++)
         {
             button[i].SetActive(true);
@@ -143,6 +147,7 @@ public class SlowmotionManager : MonoBehaviour
             button[i].SetActive(false);
         }
 
+        isTuto = false;
         page = 0;
         GameManager.Instance.isPaused = false;
         Time.timeScale = 1;
@@ -150,6 +155,7 @@ public class SlowmotionManager : MonoBehaviour
 
     public void ChangePage(int i)
     {
+        if((i == -1 && page == 0) || (i == 1 && page == tutoUi.Length - 1)) { return; }
         for (int idx = 0; idx < tutoUi.Length; idx++)
         {
             tutoUi[idx].SetActive(false);
