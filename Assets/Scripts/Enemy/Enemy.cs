@@ -42,6 +42,12 @@ public class Enemy : MonoBehaviour
 
     IEnumerator EnemyExDel()
     {
+        Combo.comboCt++; // 콤보 증가
+        Combo.i = 0;
+        GameManager.Instance.energy = PGravity.fenergy; // 중력량 증가
+        GameManager.Instance.scoreCt += Combo.comboCt % 3 == 0 ? 200 : 100; // 기본 점수 100증가 3콤보 배수마다 200 증가
+        GameManager.Instance.comboActive = true;
+
         animator.enabled = false;
         childEf.SetActive(true);
 

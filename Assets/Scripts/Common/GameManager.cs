@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
             }
             poolCt = randomIndex;
         }
-        else if (poolCt > tr.transform.childCount)
+        else if (poolCt >= tr.transform.childCount)
         { poolCt = 0; }
 
         bool spawnPoss = false;

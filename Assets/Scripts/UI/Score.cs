@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
@@ -9,7 +10,11 @@ public class Score : MonoBehaviour
     private Text finHighScore;
     [SerializeField]
     private string exhi = "HighScore";
-
+    public GameObject crown;
+    private float waitTime;
+    private float maxTime = 5;
+        
+    bool breakScore;
 
     [SerializeField]
     private int hiScoreCt = 0;
@@ -25,11 +30,10 @@ public class Score : MonoBehaviour
         //highScore.text = hiScoreCt.ToString("00000");
         scoreUI = GameObject.Find("ScoreVal").GetComponent<Text>();    // 스코어라는 text탐색
 
-        //hiScoreCt = 0;
+        hiScoreCt = 0;
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if ((int)GameManager.Instance.scoreCt > hiScoreCt)
@@ -37,8 +41,23 @@ public class Score : MonoBehaviour
             hiScoreCt = (int)GameManager.Instance.scoreCt;
             AccountInfoManager.account.info.NewHiScore((int)GameManager.Instance.scoreCt);
             PlayerPrefs.SetInt(exhi, (int)GameManager.Instance.scoreCt);
-            //highScore.text = scoreUI.text;
+            
+            if (!breakScore) { breakScore = true; }
         }
+
+        if (breakScore && waitTime < maxTime) { 
+            waitTime += Time.deltaTime;
+            Debug.Log(waitTime);
+            Color c = crown.GetComponent<Image>().color;
+            c.a = .3f + Mathf.PingPong(Time.time * 7f, .7f);
+            crown.GetComponent<Image>().color = c;
+        }
+        else if (breakScore) { breakScore = false;
+            Color c = crown.GetComponent<Image>().color;
+            c.a = 1;
+            crown.GetComponent<Image>().color = c;
+        }
+
         if (int.Parse(highScore.text) > int.Parse(digit))
         {
             digit = digit + "0";
@@ -87,6 +106,19 @@ public class Score : MonoBehaviour
             Reset();
         }
     }
+    /*
+    IEnumerator newScore(float aValue, float aTime)
+    {
+        breakScore = true;
+        float alpha = crown.GetComponent<Image>().material.color.a;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, aValue, t));
+            crown.GetComponent<Image>().material.color = newColor;
+            yield return null;
+        }
+    }
+    */
 
     void printScore()
     {
@@ -101,4 +133,5 @@ public class Score : MonoBehaviour
         PlayerPrefs.DeleteKey(exhi);
     }
 
+    
 }

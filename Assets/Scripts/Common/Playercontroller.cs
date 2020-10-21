@@ -124,13 +124,7 @@ public class Playercontroller : MonoBehaviour
         {
             GameManager.Instance.sp = 0; // 내려가지 않게 함
             GameManager.Instance.kill = true;
-            Combo.comboCt++; // 콤보 증가
-            Combo.i = 0;
             GameManager.Instance.shake = true; // 화면 흔들림 켬
-            EnemySpawner.EnemyCt--;
-            GameManager.Instance.energy = PGravity.fenergy; // 중력량 증가
-            GameManager.Instance.scoreCt += Combo.comboCt % 3 == 0 ? 200 : 100; // 기본 점수 100증가 3콤보 배수마다 200 증가
-            GameManager.Instance.comboActive = true;
             enemy.SendMessage("EnemyExDel");
             yield return null;
         }
