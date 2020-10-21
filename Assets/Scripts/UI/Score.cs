@@ -30,7 +30,7 @@ public class Score : MonoBehaviour
         //highScore.text = hiScoreCt.ToString("00000");
         scoreUI = GameObject.Find("ScoreVal").GetComponent<Text>();    // 스코어라는 text탐색
 
-        hiScoreCt = 0;
+        //hiScoreCt = 0;
         
     }
 
