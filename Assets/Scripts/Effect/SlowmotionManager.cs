@@ -11,10 +11,15 @@ public class SlowmotionManager : MonoBehaviour
 
     public GameObject[] tutoUi;
     public GameObject[] button;
+
+    public GameObject credit;
+    public GameObject cdt_esc;
+
     private int page;
     bool isTuto;
     private void Start()
     {
+        //DeactiveCredit();
         DeactiveTutorial();
 
         //AccountInfoManager.account.info.hiScore = 0;
@@ -182,6 +187,18 @@ public class SlowmotionManager : MonoBehaviour
 
         }
         else { DeactiveTutorial(); }
+    }
+
+    public void DeactiveCredit()
+    {
+        credit.SetActive(false);
+        cdt_esc.SetActive(false);
+    }
+
+    public void ActiveCredit()
+    {
+        credit.SetActive(true);
+        cdt_esc.SetActive(true);
     }
 
 }
