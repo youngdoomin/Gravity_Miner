@@ -15,19 +15,24 @@ public class SlowmotionManager : MonoBehaviour
     public GameObject credit;
     public GameObject cdt_esc;
 
+    const int Canv_Setting = 0;
+    const int Canv_Shutdown = 1;
+    const int Canv_Gameover = 2;
+    const int Canv_IngamePause = 3;
     private int page;
     bool isTuto;
     private void Start()
     {
+        PlayTime();
         //DeactiveCredit();
-        DeactiveTutorial();
+        //DeactiveTutorial();
 
         //AccountInfoManager.account.info.hiScore = 0;
     }
 
     private void OnLevelWasLoaded(int level)
     {
-        ClosePopup();
+        ClosePopupAll();
         if(AccountInfoManager.account.info.hiScore == 0)
         {
             ActiveTutorial();
@@ -45,12 +50,12 @@ public class SlowmotionManager : MonoBehaviour
 
         }
 
-        if (stScene == SceneManager.GetActiveScene().name)
+        if (stScene == SceneManager.GetActiveScene().name) //게임중
         {
             if (GameManager.Instance.life > 0)
             {
                 if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
-                { TimeSwitch(0); }
+                { TimeSwitch(3); }
                 else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
                 if (GameManager.Instance.isPaused != true)
                 { SlowMotion(); }
@@ -62,10 +67,10 @@ public class SlowmotionManager : MonoBehaviour
             { again(); }
         }
 
-        else
+        else //메인화면
         {
             if (Input.GetKeyDown(KeyCode.Escape)) // Esc 버튼 눌렀을 때
-            { TimeSwitch(0); }
+            { TimeSwitch(Canv_Setting); }
             else if (Input.GetKeyDown(KeyCode.Backspace)) { TimeSwitch(1); }
 
         }
@@ -77,27 +82,39 @@ public class SlowmotionManager : MonoBehaviour
         if (GameManager.Instance.isPaused == true)    //일시정지가 밎다면
         { OpenPopup(i); } // 시간 멈춤
         else                    //아니면
-        { PlayTime(); } // 시간 흐름
+        { ClosePopup(i); } // 시간 흐름
+    }
+
+    public void GamePause()
+    {
+
+        if (stScene == SceneManager.GetActiveScene().name) //게임중
+        {
+            OpenPopup(Canv_IngamePause);
+        }
+        else
+        {
+            OpenPopup(Canv_Setting);
+        }
     }
 
     public void goHome()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene("Start_Screen", LoadSceneMode.Single);
         SoundManager.instance.PlayRandomIntro();
-        ClosePopup();
+        PlayTime();
     }
 
     public void again()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        ClosePopup();
+        ClosePopupAll();
     }
 
     public void PlayTime()
     {
-        ClosePopup();
+        ClosePopupAll();
         DeactiveTutorial();
         GameManager.Instance.isPaused = false;
         Time.timeScale = 1;
@@ -110,10 +127,27 @@ public class SlowmotionManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private void ClosePopup()
+    private void ClosePopupAll()
     {
         foreach (GameObject uiPopup in settingPopup)
             uiPopup.SetActive(false);
+    }
+
+    public void ClosePopup(int i) //원하는 팝업창만 닫기
+    {
+        settingPopup[i].SetActive(false);
+        bool allClosed = true;
+        for (int j = 0; j < settingPopup.Length; j++)
+        {
+            if (settingPopup[j].activeSelf == true)
+            {
+                allClosed = false;
+            }
+        }
+        if (allClosed == true)  //모든 팝업창이 꺼져있으면 게임 시작
+        {
+            PlayTime();  
+        }
     }
     void SlowMotion()  //파워 사용중엔 시간이 느리게 흐름
     {
@@ -137,7 +171,7 @@ public class SlowmotionManager : MonoBehaviour
             button[i].SetActive(true);
         }
 
-        ClosePopup();
+        ClosePopupAll();
         ChangePage(0);
     }
     public void DeactiveTutorial()
