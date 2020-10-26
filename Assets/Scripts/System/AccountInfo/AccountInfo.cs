@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName ="new Account", menuName = "Assets/Account")]
 public class AccountInfo : ScriptableObject
 {
     public int hiScore;
-    
+    //private AudioMixerGroup mixer;
 
     public void NewHiScore(int score)
     {
@@ -20,7 +21,10 @@ public class AccountInfo : ScriptableObject
             Debug.Log("현재 점수가 하이스코어보다 높지 않습니다");
         }
     }
-
-
-    
+    /*
+    public void SaveMixerSetting(AudioMixerGroup group)
+    {
+        mixer = group;
+    }
+    */
 }
