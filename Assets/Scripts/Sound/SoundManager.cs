@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        AccountInfoManager.account.info.SaveMixerSetting(bgmOutput);
+        //AccountInfoManager.account.info.SaveMixerSetting(bgmOutput);
         if (instance != null && instance != this)    // bgm매니저는 하나만 있어야함
         {
             Destroy(this.gameObject);
