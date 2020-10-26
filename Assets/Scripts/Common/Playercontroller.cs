@@ -14,7 +14,7 @@ public class Playercontroller : MonoBehaviour
     public const int maxLife = 4;
     SpriteRenderer sR;
 
-    private float xKnockB = 0.2f;
+    private float xKnockB = 0.1f;
     private float yKnockB = 0.0f;
     private Rigidbody2D rb;
 
@@ -149,6 +149,6 @@ public class Playercontroller : MonoBehaviour
         Time.timeScale = 0.2f;
         yield return new WaitForSeconds(1);
         var uiPopup = GameObject.FindGameObjectWithTag("UI_Controller");
-        uiPopup.SendMessage("OpenPopup", 2);
+        uiPopup.SendMessage("OpenPopup", 1);
     }
 }
