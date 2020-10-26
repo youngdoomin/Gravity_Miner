@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SubGravity : MonoBehaviour
 {
-    public int divide;
+    public float divide;
     public int knock = 5;
     bool dontLoop;
 

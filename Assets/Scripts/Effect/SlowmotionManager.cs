@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SlowmotionManager : MonoBehaviour
 {
-    public const float slowmotionScale = 0.2f; //슬로우모션 배율
+    public const float slowmotionScale = 0.1f; //슬로우모션 배율
     private string stScene = "Flower_Rain";
     public GameObject[] settingPopup;
 

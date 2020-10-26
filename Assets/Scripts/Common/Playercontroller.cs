@@ -14,7 +14,7 @@ public class Playercontroller : MonoBehaviour
     public const int maxLife = 4;
     SpriteRenderer sR;
 
-    private float xKnockB = 0.2f;
+    private float xKnockB = 0.1f;
     private float yKnockB = 0.0f;
     private Rigidbody2D rb;
 
