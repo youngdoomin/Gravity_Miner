@@ -10,6 +10,7 @@ public class StartManager : MonoBehaviour
 
     [Header("scripts")]
     public Scrolling scrolling;
+    public TilemapSpawner tilemapspawner;
     public HPManager hPManager;
     public Combo combo;
     public Score score;
@@ -19,6 +20,7 @@ public class StartManager : MonoBehaviour
     private void Awake()
     {
         scrolling.enabled = false;
+        tilemapspawner.enabled = false;
         hPManager.enabled = false;
         combo.enabled = false;
         score.enabled = false;
@@ -69,6 +71,7 @@ public class StartManager : MonoBehaviour
                 break;
 
             case 4: //스크립트 활성화
+                tilemapspawner.enabled = true;
                 hPManager.enabled = true;
                 combo.enabled = true;
                 score.enabled = true;

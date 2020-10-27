@@ -179,20 +179,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetRandomPooledObject()
     {
-        int count = 0;
         int randomIndex = 0;
-
-        for (int i = 0; i < tileSpawnPos.childCount; i++)
-        {
-            if (tileSpawnPos.GetChild(i).gameObject.activeInHierarchy)
-            {
-                count++;
-            }
-        }
-
-        Debug.Log(count);
-
-        if (count > 2) { return null; };
 
         while (true)
         {
