@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour
     public float enemyDelay;
     public float itemDelay;
     public float jamDelay;
+    private Button bt;
+    private Animator animator;
+    public Sprite setting_sprite;
+    public Sprite pause_sprite;
+    public RuntimeAnimatorController settingControl;
+    public RuntimeAnimatorController pauseControl;
 
     float xAxis;
     int poolCt;
@@ -61,8 +67,25 @@ public class GameManager : MonoBehaviour
 
         resolution = Screen.currentResolution;
     }
+    private void OnLevelWasLoaded(int level)
+    {
+        bt = GameObject.Find("Setting_B").GetComponent<Button>();
+        animator = bt.GetComponent<Animator>();
+
+        if (SceneManager.GetActiveScene().name == "Flower_Rain")
+        {
+            animator.runtimeAnimatorController = pauseControl;
+            bt.image.sprite = pause_sprite;
+        }
+        else
+        {
+            animator.runtimeAnimatorController = settingControl;
+            bt.image.sprite = setting_sprite;
+        }
+    }
     void Start()
     {
+
         //Screen.SetResolution(Screen.width, Screen.height, true);
         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
         if (SceneManager.GetActiveScene().name == "Flower_Rain")
@@ -110,6 +133,7 @@ public class GameManager : MonoBehaviour
 
 
         }
+
     }
 
     void Update()
@@ -179,7 +203,20 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetRandomPooledObject()
     {
+        int count = 0;
         int randomIndex = 0;
+
+        for (int i = 0; i < tileSpawnPos.childCount; i++)
+        {
+            if (tileSpawnPos.GetChild(i).gameObject.activeInHierarchy)
+            {
+                count++;
+            }
+        }
+
+        Debug.Log(count);
+
+        if (count > 2) { return null; };
 
         while (true)
         {

@@ -36,7 +36,7 @@ public class Playercontroller : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.GroundDam)
-        {OnDamaged();}
+        { OnDamaged(); }
         if (GameManager.Instance.kill && !GameManager.Instance.killLoop)
         {
             SoundManager.instance.PlaySE(SoundManager.instance.kill);
@@ -76,7 +76,7 @@ public class Playercontroller : MonoBehaviour
         }
 
         else if (collision.gameObject.tag == "jam" || collision.gameObject.tag == "item")
-        {SoundManager.instance.PlaySE(SoundManager.instance.lootItem);}
+        { SoundManager.instance.PlaySE(SoundManager.instance.lootItem); }
     }
 
     public void OnDamaged()
@@ -149,6 +149,6 @@ public class Playercontroller : MonoBehaviour
         Time.timeScale = 0.2f;
         yield return new WaitForSeconds(1);
         var uiPopup = GameObject.FindGameObjectWithTag("UI_Controller");
-        uiPopup.SendMessage("OpenPopup", 1);
+        uiPopup.SendMessage("OpenPopup", SlowmotionManager.Canv_Gameover);
     }
 }
