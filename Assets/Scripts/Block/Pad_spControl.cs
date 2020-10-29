@@ -9,8 +9,8 @@ public class Pad_spControl : MonoBehaviour
     }
     [SerializeField]
     PadType Type;
- 
-    private void OnTriggerEnter2D(Collider2D coll)
+
+    private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.name == "Player")
         {

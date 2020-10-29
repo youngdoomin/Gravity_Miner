@@ -12,9 +12,6 @@ public class SlowmotionManager : MonoBehaviour
     public GameObject[] tutoUi;
     public GameObject[] button;
 
-    public GameObject credit;
-    public GameObject cdt_esc;
-
     const int Canv_IngamePause = 0;
     public const int Canv_Gameover = 1;
     const int Canv_Setting = 2;
@@ -195,11 +192,6 @@ public class SlowmotionManager : MonoBehaviour
             }
         }
         else { DeactiveTutorial(); }
-    }
-    public void IsActiveCredit(bool b)
-    {
-        credit.SetActive(b);
-        cdt_esc.SetActive(b);
     }
 
 }

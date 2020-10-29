@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class SubGravity : MonoBehaviour
 {
-    public int divide;
+    public float divide;
     public int knock = 5;
+    public int minimumSp = 10;
     bool dontLoop;
 
     void Update()
@@ -30,7 +31,7 @@ public class SubGravity : MonoBehaviour
             GameManager.Instance.killLoop = false;
             GameManager.Instance.reaction = false;
 
-            if(GameManager.Instance.sp < PGravity.power)
+            if (GameManager.Instance.sp < minimumSp)
                 GameManager.Instance.sp += Time.fixedDeltaTime * PGravity.power / divide;
 
             else if (GameManager.Instance.sp < GameManager.Instance.speedLock)

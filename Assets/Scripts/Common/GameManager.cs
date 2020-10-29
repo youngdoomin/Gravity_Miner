@@ -45,10 +45,7 @@ public class GameManager : MonoBehaviour
     public float enemyDelay;
     public float itemDelay;
     public float jamDelay;
-    private Button bt;
     private Animator animator;
-    public Sprite setting_sprite;
-    public Sprite pause_sprite;
     public RuntimeAnimatorController settingControl;
     public RuntimeAnimatorController pauseControl;
 
@@ -69,18 +66,15 @@ public class GameManager : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
-        bt = GameObject.Find("Setting_B").GetComponent<Button>();
-        animator = bt.GetComponent<Animator>();
+        animator = GameObject.Find("Setting_B").GetComponent<Animator>();
 
         if (SceneManager.GetActiveScene().name == "Flower_Rain")
         {
             animator.runtimeAnimatorController = pauseControl;
-            bt.image.sprite = pause_sprite;
         }
         else
         {
             animator.runtimeAnimatorController = settingControl;
-            bt.image.sprite = setting_sprite;
         }
     }
     void Start()
