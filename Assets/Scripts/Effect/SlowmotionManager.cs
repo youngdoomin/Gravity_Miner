@@ -20,7 +20,11 @@ public class SlowmotionManager : MonoBehaviour
     const int Canv_Shutdown = 5;
     private int page;
     bool isTuto;
-    
+
+    private void Awake()
+    {
+        PlayTime();
+    }
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= SlowmtionManager_sceneLoaded;
@@ -28,22 +32,23 @@ public class SlowmotionManager : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += SlowmtionManager_sceneLoaded;
-        PlayTime();
     }
-
+    
     private void SlowmtionManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
         ClosePopupAll();
-        if (AccountInfoManager.account.info.hiScore == 0)
+        if (AccountInfoManager.account.info.tutorialFinished == false)
         {
-            OpenPopup(Canv_Tutorial);
+            OpenPopup(Canv_Tutorial); //여기가 문제
             ActiveTutorial();
+            AccountInfoManager.account.info.tutorialFinished = true;
         }
     }
-
+    
     void Update()
     {
+        
         if (isTuto)
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) { ChangePage(-1); }

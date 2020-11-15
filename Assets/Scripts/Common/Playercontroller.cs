@@ -24,6 +24,7 @@ public class Playercontroller : MonoBehaviour
     //public Sprite Kill;
     public Sprite Damaged;
     public Sprite Fall;
+    
 
     void Start()
     {
@@ -48,7 +49,7 @@ public class Playercontroller : MonoBehaviour
         float horizontalMove = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalMove, 0);
         if (!GameManager.Instance.shake)
-            rb.velocity = movement * movespeed / Time.timeScale;
+            rb.velocity = movement * movespeed * Time.timeScale;  //???
         rb.position = new Vector2
             (
                 Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),  //X

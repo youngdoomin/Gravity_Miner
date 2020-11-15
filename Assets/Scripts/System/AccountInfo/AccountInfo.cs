@@ -6,7 +6,7 @@ using UnityEngine;
 public class AccountInfo : ScriptableObject
 {
     public int hiScore;
-    
+    public bool tutorialFinished = false;
 
     public void NewHiScore(int score)
     {

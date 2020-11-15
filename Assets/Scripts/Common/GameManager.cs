@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
             animator.runtimeAnimatorController = settingControl;
         }
     }
-
     void Start()
     {
 
