@@ -20,23 +20,28 @@ public class SlowmotionManager : MonoBehaviour
     const int Canv_Shutdown = 5;
     private int page;
     bool isTuto;
-
+    
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SlowmtionManager_sceneLoaded;
+    }
     private void Start()
     {
+        SceneManager.sceneLoaded += SlowmtionManager_sceneLoaded;
         PlayTime();
-        //DeactiveCredit();
-        //DeactiveTutorial();
-        //AccountInfoManager.account.info.hiScore = 0;
     }
-    private void OnLevelWasLoaded(int level)
+
+    private void SlowmtionManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         ClosePopupAll();
         if (AccountInfoManager.account.info.hiScore == 0)
         {
+            OpenPopup(Canv_Tutorial);
             ActiveTutorial();
-            GameManager.Instance.isPaused = true;
         }
     }
+
     void Update()
     {
         if (isTuto)

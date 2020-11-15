@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 
         resolution = Screen.currentResolution;
     }
+    /*  더이상 지원하지 않는 메소드
     private void OnLevelWasLoaded(int level)
     {
         animator = GameObject.Find("Setting_B").GetComponent<Animator>();
@@ -77,6 +78,31 @@ public class GameManager : MonoBehaviour
             animator.runtimeAnimatorController = settingControl;
         }
     }
+    */
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += GameManager_sceneloaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= GameManager_sceneloaded;
+    }
+
+    private void GameManager_sceneloaded(Scene scene, LoadSceneMode mode)
+    {
+
+        animator = GameObject.Find("Setting_B").GetComponent<Animator>();
+
+        if (SceneManager.GetActiveScene().name == "Flower_Rain")
+        {
+            animator.runtimeAnimatorController = pauseControl;
+        }
+        else
+        {
+            animator.runtimeAnimatorController = settingControl;
+        }
+    }
+
     void Start()
     {
 
