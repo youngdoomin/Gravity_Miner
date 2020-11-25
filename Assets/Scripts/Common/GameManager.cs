@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
         getJam;
     [HideInInspector]
     public float energy = PGravity.fenergy, gravityVal, sp, waitTime, scoreCt;
+    [HideInInspector]
+    public int itemSpawnCt, jamSpawnCt;
 
     public int life, uiJamCt, jamCt;
     public float speedLock = 40.0f;
@@ -272,7 +274,7 @@ public class GameManager : MonoBehaviour
 
         if (isRandom)
         {
-            int randomIndex = Random.Range(0, tr.transform.childCount);
+            int randomIndex = Random.Range(0, tr.transform.childCount - 1);
             int tryCt = 0;
             while (tr.GetChild(randomIndex).gameObject.activeInHierarchy == true)
             {

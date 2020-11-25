@@ -5,10 +5,11 @@ public class DestructTile : MonoBehaviour
     [HideInInspector]
     public SpriteRenderer tileSp;
     private Vector3 spawnPos;
-
+    Rigidbody2D rigid;
 
     void Awake()
     {
+        rigid = GetComponent<Rigidbody2D>();
         spawnPos = transform.localPosition;
     }
 
@@ -26,6 +27,17 @@ public class DestructTile : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D coll)
+    {
+
+        if((transform.TransformPoint(Vector3.zero).x < -13) || (transform.TransformPoint(Vector3.zero).x > 13))
+        {
+            this.gameObject.SetActive(false);
+        }
+        
+
+        Debug.Log(transform.localPosition.x);
+    }
     private void OnEnable()
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(false);

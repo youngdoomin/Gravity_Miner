@@ -19,6 +19,11 @@ public class Pad_spControl : MonoBehaviour
             else if (Type == PadType.Down)
             { GameManager.Instance.sp = 0; }
         }
+
+        if ((transform.TransformPoint(Vector3.zero).x < -13) || (transform.TransformPoint(Vector3.zero).x > 13))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 }
 
