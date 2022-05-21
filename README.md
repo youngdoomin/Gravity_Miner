@@ -34,10 +34,10 @@
 
 ### **시작 화면**
 
-![https://user-images.githubusercontent.com/46087918/169643276-f0a8be9c-c65e-4f02-8308-06d484f2cc05.png](https://user-images.githubusercontent.com/46087918/169643276-f0a8be9c-c65e-4f02-8308-06d484f2cc05.png)
+![https://user-images.githubusercontent.com/46087918/169644144-8a97df98-4397-490e-ba95-c54d01cd819f.png](https://user-images.githubusercontent.com/46087918/169644144-8a97df98-4397-490e-ba95-c54d01cd819f.png)
 
 ### **게임플레이 화면**
-![(https://user-images.githubusercontent.com/46087918/169643283-7aba1515-8781-4060-922b-348c051ca9a7.png)](https://user-images.githubusercontent.com/46087918/169643283-7aba1515-8781-4060-922b-348c051ca9a7.png)
+![(https://user-images.githubusercontent.com/46087918/169644142-f522a434-40ab-46c3-bf7e-b72f38e5581a.png)](https://user-images.githubusercontent.com/46087918/169644142-f522a434-40ab-46c3-bf7e-b72f38e5581a.png)
 
 ### **결과 화면**
-![(https://user-images.githubusercontent.com/46087918/169643286-bf035161-f86d-40ec-85c5-7486212817ec.png)](https://user-images.githubusercontent.com/46087918/169643286-bf035161-f86d-40ec-85c5-7486212817ec.png)
+![(https://user-images.githubusercontent.com/46087918/169644146-063a27ee-9211-4bd9-a183-877392bdbb9e.png)](https://user-images.githubusercontent.com/46087918/169644146-063a27ee-9211-4bd9-a183-877392bdbb9e.png)
