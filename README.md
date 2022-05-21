@@ -1,4 +1,4 @@
-# Gravity_Miner
+# Gravity_Miner ⛏
 
 > Unity, C#으로 작성된 아케이드 액션 플랫포머 게임입니다
 > 
@@ -29,3 +29,15 @@
 5. 5개의 다른 보석을 모아 마이닝 보너스 추가 점수를 받을 수 있습니다.  
 
 [게임 소개 영상](https://www.youtube.com/watch?v=dFd5uygcVto&ab_channel=%EB%AF%BC%EC%98%81%EB%91%90)
+
+## **Screenshots 🖼**
+
+### **시작 화면**
+
+![https://user-images.githubusercontent.com/46087918/169643276-f0a8be9c-c65e-4f02-8308-06d484f2cc05.png](https://user-images.githubusercontent.com/46087918/169643276-f0a8be9c-c65e-4f02-8308-06d484f2cc05.png)
+
+### **게임플레이 화면**
+![(https://user-images.githubusercontent.com/46087918/169643283-7aba1515-8781-4060-922b-348c051ca9a7.png)](https://user-images.githubusercontent.com/46087918/169643283-7aba1515-8781-4060-922b-348c051ca9a7.png)
+
+### **결과 화면**
+![(https://user-images.githubusercontent.com/46087918/169643286-bf035161-f86d-40ec-85c5-7486212817ec.png)](https://user-images.githubusercontent.com/46087918/169643286-bf035161-f86d-40ec-85c5-7486212817ec.png)
