@@ -28,4 +28,4 @@
     속도 증가/감소 패드: 통과시 속도를 조정합니다.
 5. 5개의 다른 보석을 모아 마이닝 보너스 추가 점수를 받을 수 있습니다.
 
-[게임 소개 영상](https://www.youtube.com/watch?v=dFd5uygcVto&ab_channel=%EB%AF%BC%EC%98%81%EB%91%90
+[게임 소개 영상](https://www.youtube.com/watch?v=dFd5uygcVto&ab_channel=%EB%AF%BC%EC%98%81%EB%91%90)
